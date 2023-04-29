@@ -16,7 +16,7 @@ var player_position = Vector2i.ZERO
 var units = {}
 
 func add_unit(unit, pos):
-#	print("Adding unit at=", pos, " units.has(pos)=", units.has(pos))
+#	print("Adding unit at=", pos, " units.has(pos)=", units.has(pos), " unit?=", unit==null)
 	if units.has(pos):
 		units[pos].append(unit)
 	else:
@@ -25,7 +25,6 @@ func add_unit(unit, pos):
 		
 func remove_unit(unit, pos:Vector2i):
 	if(units.has(pos)):
-#		print("removing at pos=", pos)
 #		print("pre ", len(units[pos]))
 		units[pos].erase(unit)
 #		print("post ", len(units[pos]))
@@ -33,8 +32,12 @@ func remove_unit(unit, pos:Vector2i):
 			units.erase(pos)
 #		print("post, has=", units.has(pos))
 
+func find_unit_pos(unit):
+	for pos in units.keys():
+		if unit in units[pos]:
+			print("unit @ ", pos)
+
 func delete_all_units_at(pos:Vector2i):
-	print("deleting all at: ", pos)
 	if units.has(pos):
 		for unit in units[pos]:
 			unit.queue_free()
@@ -74,7 +77,7 @@ func in_range(pos):
 func push_units(from, pos) -> bool:
 	var new_pos = (pos-from)+pos
 	
-	print("pushing units! from=", from, " pos=", pos, " new_pos=", new_pos)
+#	print("pushing units! from=", from, " pos=", pos, " new_pos=", new_pos)
 	
 	if not in_range(new_pos) or any_static(new_pos):
 		return false
@@ -107,10 +110,10 @@ func _ready():
 var down = Vector2i(0, 1) # ???
 
 func river_flow():
-	print("----------------------------")
+#	print("----------------------------")
 	for pos in units.keys():
 		for unit in units[pos]:
-			print("pos=", pos)
+#			print("pos=", pos)
 			if unit.dynamic:
 #				print("moving!")
 				var new_pos = pos + down
@@ -123,11 +126,7 @@ func river_flow():
 	for x in range(map_size.x):
 		var v = Vector2i(x, -1)
 		if randi() % 20 == 0:
-			add_unit(create_unit(unit_prefab, v, true, randi() % 2 == 0), v)
-			
-	for pos in units.keys():
-		for unit in units[pos]:
-			print("new pos=", pos)
+			create_unit(unit_prefab, v, true, randi() % 2 == 0)
 	
 	# clear units that are now off the bottom of the grid
 	for x in range(map_size.x):
