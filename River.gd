@@ -22,13 +22,21 @@ func add_unit(unit, pos):
 		units[pos] = [unit]
 	unit.position = spacing * pos
 		
-func remove_unit(unit, pos):
+func remove_unit(unit, pos:Vector2i):
 	if(units.has(pos)):
 		units[pos].erase(unit)
 		if len(units[pos]) == 0:
 			units.erase(pos)
 
-func move_unit(unit, origin, target):
+func delete_all_units_at(pos:Vector2i):
+	print("deleting all at: ", pos)
+	if units.has(pos):
+		for unit in units[pos]:
+			unit.queue_free()
+		units[pos].clear()
+		units.erase(pos)
+
+func move_unit(unit, origin:Vector2i, target:Vector2i):
 	remove_unit(unit, origin)
 	add_unit(unit, target)
 
@@ -94,10 +102,10 @@ func _ready():
 var down = Vector2i(0, 1) # ???
 
 func river_flow():
-#	print("----------------------------")
+	print("----------------------------")
 	for pos in units.keys():
 		for unit in units[pos]:
-#			print("pos=", pos)
+			print("pos=", pos)
 			if unit.dynamic:
 #				print("moving!")
 				var new_pos = pos + down
@@ -105,6 +113,20 @@ func river_flow():
 					new_pos = pos + (Vector2i(1, 0) if unit.right else Vector2i(-1, 0))
 					
 				move_unit(unit, pos, new_pos)
+	
+	# randomly add new units just above the top of the grid
+	for x in range(map_size.x):
+		var v = Vector2i(x, -1)
+		if randi() % 20 == 0:
+			add_unit(create_unit(unit_prefab, v, true, randi() % 2 == 0), v)
+			
+	for pos in units.keys():
+		for unit in units[pos]:
+			print("new pos=", pos)
+	
+	# clear units that are now off the bottom of the grid
+	for x in range(map_size.x):
+		delete_all_units_at(Vector2i(x, map_size.y))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
