@@ -9,3 +9,6 @@
 
 [node name="River" type="Node2D" parent="."]
 script = ExtResource("2_ownun")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.25, 0.25)
