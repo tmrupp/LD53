@@ -54,8 +54,19 @@ func _input(event):
 			dynamics[new_pos] = dynamics[pos]
 			dynamics.erase(pos)
 			dynamics[new_pos].position = spacing * new_pos
-				
 			
+
+func river_flow():
+	for pos in dynamics.keys():
+			var new_pos = pos + down
+			if stationaries.has(new_pos):
+				new_pos = pos + (Vector2i(1, 0) if dynamics[pos].right else Vector2i(-1, 0))
+				if stationaries.has(new_pos):
+					new_pos = pos
+			
+			dynamics[new_pos] = dynamics[pos]
+			dynamics.erase(pos)
+			dynamics[new_pos].position = spacing * new_pos
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
