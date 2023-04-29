@@ -1,6 +1,5 @@
-[gd_scene load_steps=10 format=3 uid="uid://cgg7fyj7qb0qu"]
+[gd_scene load_steps=9 format=3 uid="uid://cgg7fyj7qb0qu"]
 
-[ext_resource type="PackedScene" path="res://lil_guy.tscn" id="1_6euwy"]
 [ext_resource type="Texture2D" uid="uid://c6o0ro4o3waef" path="res://icon.svg" id="1_qpcv4"]
 [ext_resource type="Script" path="res://River.gd" id="2_ownun"]
 [ext_resource type="Script" path="res://Riverbanks.gd" id="3_npkt8"]
@@ -11,8 +10,6 @@
 [ext_resource type="Script" path="res://UIRightBankSouls.gd" id="9_by223"]
 
 [node name="Main" type="Node2D"]
-
-[node name="LilGuy" parent="." instance=ExtResource("1_6euwy")]
 
 [node name="River" type="Node2D" parent="."]
 script = ExtResource("2_ownun")
