@@ -16,6 +16,7 @@ var player_position = Vector2i.ZERO
 var units = {}
 
 func add_unit(unit, pos):
+#	print("Adding unit at=", pos, " units.has(pos)=", units.has(pos))
 	if units.has(pos):
 		units[pos].append(unit)
 	else:
@@ -24,9 +25,13 @@ func add_unit(unit, pos):
 		
 func remove_unit(unit, pos:Vector2i):
 	if(units.has(pos)):
+#		print("removing at pos=", pos)
+#		print("pre ", len(units[pos]))
 		units[pos].erase(unit)
+#		print("post ", len(units[pos]))
 		if len(units[pos]) == 0:
 			units.erase(pos)
+#		print("post, has=", units.has(pos))
 
 func delete_all_units_at(pos:Vector2i):
 	print("deleting all at: ", pos)
@@ -95,9 +100,9 @@ func _ready():
 			s.position = v * spacing
 			
 			if randi() % 20 == 0:
-				add_unit(create_unit(unit_prefab, v, true, randi() % 2 == 0), v)
+				create_unit(unit_prefab, v, true, randi() % 2 == 0)
 			elif randi() % 20 == 1:
-				add_unit(create_unit(unit_prefab, v, false), v)
+				create_unit(unit_prefab, v, false)
 
 var down = Vector2i(0, 1) # ???
 
@@ -109,7 +114,7 @@ func river_flow():
 			if unit.dynamic:
 #				print("moving!")
 				var new_pos = pos + down
-				if units.has(new_pos):
+				if (units.has(new_pos) or (player_position_to_local() == new_pos)):
 					new_pos = pos + (Vector2i(1, 0) if unit.right else Vector2i(-1, 0))
 					
 				move_unit(unit, pos, new_pos)

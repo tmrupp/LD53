@@ -21,8 +21,8 @@ var strength_capacity:int = 6 # amount to replenish when on shore
 func _ready():
 	position = Vector2i(-move_unit_size, 0)
 
-func _process(delta):
-	river.player_position = position
+#func _process(delta):
+#	river.player_position = position
 	
 func interact_with_unit(direction:Vector2i):
 	var lpp = river.player_position_to_local()
@@ -71,6 +71,7 @@ func _input(event):
 			current_soul_count -= 1
 
 func on_move():
+	river.player_position = position
 	if state == BOAT_STATE.In_River:
 		current_moves_remaining -= 1
 		if current_moves_remaining <= 0:
