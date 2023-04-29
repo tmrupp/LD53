@@ -4,6 +4,7 @@ var spacing = 128.0
 var map = []
 
 var map_size = Vector2i(10, 10)
+var move_unit_size = 128
 
 var sprite = preload("res://lil_guy.tscn")
 @onready var main = $".."
@@ -60,21 +61,18 @@ func _ready():
 
 var down = Vector2i(0, 1) # ???
 
-func _input(event):
-	if event.is_action_pressed("next_turn"):
-		print("----------------------------")
-		for pos in units.keys():
-			for unit in units[pos]:
-				print("pos=", pos)
-				if unit.dynamic:
-					print("moving!")
-					var new_pos = pos + down
-					if units.has(new_pos):
-						new_pos = pos + (Vector2i(1, 0) if unit.right else Vector2i(-1, 0))
-						
-					move_unit(unit, pos, new_pos)
-				
-			
+func river_flow():
+	print("----------------------------")
+	for pos in units.keys():
+		for unit in units[pos]:
+			print("pos=", pos)
+			if unit.dynamic:
+				print("moving!")
+				var new_pos = pos + down
+				if units.has(new_pos):
+					new_pos = pos + (Vector2i(1, 0) if unit.right else Vector2i(-1, 0))
+					
+				move_unit(unit, pos, new_pos)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

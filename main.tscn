@@ -1,7 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://cgg7fyj7qb0qu"]
+[gd_scene load_steps=10 format=3 uid="uid://cgg7fyj7qb0qu"]
 
-[ext_resource type="PackedScene" uid="uid://d3wa2v70apwfv" path="res://lil_guy.tscn" id="1_6euwy"]
+[ext_resource type="PackedScene" path="res://lil_guy.tscn" id="1_6euwy"]
+[ext_resource type="Texture2D" uid="uid://c6o0ro4o3waef" path="res://icon.svg" id="1_qpcv4"]
 [ext_resource type="Script" path="res://River.gd" id="2_ownun"]
+[ext_resource type="Script" path="res://Riverbanks.gd" id="3_npkt8"]
+[ext_resource type="Script" path="res://Player.gd" id="3_rl8sr"]
+[ext_resource type="Script" path="res://UISpeed.gd" id="5_aivmp"]
+[ext_resource type="Script" path="res://UISoulsCarried.gd" id="7_7tojl"]
+[ext_resource type="Script" path="res://UILeftBankSouls.gd" id="8_27uy0"]
+[ext_resource type="Script" path="res://UIRightBankSouls.gd" id="9_by223"]
 
 [node name="Main" type="Node2D"]
 
@@ -10,5 +17,54 @@
 [node name="River" type="Node2D" parent="."]
 script = ExtResource("2_ownun")
 
+[node name="Riverbanks" type="Node" parent="River"]
+script = ExtResource("3_npkt8")
+
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.25, 0.25)
+offset = Vector2(512, 400)
+zoom = Vector2(0.35, 0.35)
+
+[node name="Player" type="Node2D" parent="."]
+z_index = 1
+script = ExtResource("3_rl8sr")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+modulate = Color(1, 0, 1, 1)
+texture = ExtResource("1_qpcv4")
+
+[node name="UI" type="Node" parent="."]
+
+[node name="Speed" type="Label" parent="UI"]
+offset_left = 377.0
+offset_top = -431.0
+offset_right = 725.0
+offset_bottom = -378.0
+theme_override_font_sizes/font_size = 36
+text = "Moves Remaining: X"
+script = ExtResource("5_aivmp")
+
+[node name="SoulsCarried" type="Label" parent="UI"]
+offset_left = 377.0
+offset_top = -379.0
+offset_right = 656.0
+offset_bottom = -326.0
+theme_override_font_sizes/font_size = 36
+text = "Carrying X souls"
+script = ExtResource("7_7tojl")
+
+[node name="LeftBankSouls" type="Label" parent="UI"]
+offset_left = -309.0
+offset_top = -213.0
+offset_bottom = -160.0
+theme_override_font_sizes/font_size = 36
+text = "Left Bank: X Souls"
+script = ExtResource("8_27uy0")
+
+[node name="RightBankSouls" type="Label" parent="UI"]
+offset_left = 1152.0
+offset_top = -223.0
+offset_right = 1483.0
+offset_bottom = -170.0
+theme_override_font_sizes/font_size = 36
+text = "Right Bank: X Souls"
+script = ExtResource("9_by223")
