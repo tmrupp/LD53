@@ -3,4 +3,4 @@ extends Label
 @onready var player = $"../../Player"
 	
 func _process(delta):
-	text = "Moves Remaining: " + str(player.current_moves_remaining)
+	text = "Moves Remaining: " + str(player.current_moves_remaining) + " (boat state: " + str(player.state) + ")"

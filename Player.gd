@@ -1,11 +1,14 @@
 extends Node2D
 
 @onready var river:Node = $"../River"
+@onready var riverbanks:Node = $"../River/Riverbanks"
 @onready var ui_speed:Node = $"../UI/Speed"
 @onready var ui_souls_carried:Node = $"../UI/SoulsCarried"
 @onready var move_unit_size:int = $"../River".move_unit_size
 
-var hasEmbarked:bool = false
+enum BOAT_STATE {On_Left, In_River, On_Right}
+
+var state:BOAT_STATE = BOAT_STATE.On_Left
 var max_speed:int = 3 # the value we reset 'speedcurrent_moves_remaining' to after the river flows
 var current_moves_remaining:int = max_speed
 
@@ -20,14 +23,24 @@ func _process(delta):
 	
 func _input(event):
 	# movement
-	if event.is_action_pressed("MoveRight") and position.x < (river.map_size.x - 1) * move_unit_size and current_moves_remaining > 0:
+	if event.is_action_pressed("MoveRight") and position.x < river.map_size.x * move_unit_size and current_moves_remaining > 0:
 		position.x += move_unit_size
 		on_move()
-		if not hasEmbarked:
-			hasEmbarked = true
-	elif event.is_action_pressed("MoveLeft") and position.x > 0 and current_moves_remaining > 0:
+		if state == BOAT_STATE.On_Left:
+			state = BOAT_STATE.In_River
+		elif state == BOAT_STATE.In_River and position.x == river.map_size.x * move_unit_size:
+			state = BOAT_STATE.On_Right
+			current_moves_remaining = max_speed
+			riverbanks.deposit_on_right(current_soul_count)
+			current_soul_count = 0
+	elif event.is_action_pressed("MoveLeft") and position.x >= 0 and current_moves_remaining > 0:
 		position.x -= move_unit_size
 		on_move()
+		if state == BOAT_STATE.On_Right:
+			state = BOAT_STATE.In_River
+		elif state == BOAT_STATE.In_River and position.x < 0:
+			state = BOAT_STATE.On_Left
+			current_moves_remaining = max_speed
 	elif event.is_action_pressed("MoveUp") and position.y > 0:
 		position.y -= move_unit_size
 		on_move()
@@ -36,14 +49,16 @@ func _input(event):
 		on_move()
 	
 	# soul collection
-	if not hasEmbarked:
+	if state == BOAT_STATE.On_Left:
 		if event.is_action_pressed("CollectSouls"):
-			pass
+			riverbanks.collect_from_left(1)
+			current_soul_count += 1
 		elif event.is_action_pressed("DropSouls"):
-			pass
+			riverbanks.deposit_on_left(1)
+			current_soul_count -= 1
 
 func on_move():
-	if hasEmbarked:
+	if state == BOAT_STATE.In_River:
 		current_moves_remaining -= 1
 		if current_moves_remaining <= 0:
 			river.river_flow()
