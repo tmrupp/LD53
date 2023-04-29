@@ -119,6 +119,7 @@ func river_flow():
 				var new_pos = pos + down
 				if (units.has(new_pos) or (player_position_to_local() == new_pos)):
 					new_pos = pos + (Vector2i(1, 0) if unit.right else Vector2i(-1, 0))
+					new_pos.x = clamp(new_pos.x, 0, map_size.x - 1)
 					
 				move_unit(unit, pos, new_pos)
 	
