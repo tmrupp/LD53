@@ -39,7 +39,7 @@ func _ready():
 				stationaries[v] = create(v, stationary)
 	pass # Replace with function body.
 
-var down = Vector2i(0, -1) # ???
+var down = Vector2i(0, 1) # ???
 
 func _input(event):
 	if event.is_action_pressed("next_turn"):
