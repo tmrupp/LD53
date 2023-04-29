@@ -11,7 +11,7 @@ var sprite = preload("res://lil_guy.tscn")
 #var dynamic = preload("res://dynamic.tscn")
 var unit_prefab = preload("res://unit.tscn")
 
-var player_position = Vector2i.ZERO
+var player_position:Vector2i = Vector2i.ZERO
 
 var units = {}
 
@@ -67,9 +67,6 @@ func any_static(pos):
 		if not unit.dynamic:
 			return true
 	return false
-		
-func player_position_to_local():
-	return Vector2i(player_position/spacing)
 	
 func in_range(pos):
 	return pos.x >= 0 and pos.x < map_size.x and pos.y >= 0 and pos.y < map_size.y
@@ -117,7 +114,7 @@ func river_flow():
 			if unit.dynamic:
 #				print("moving!")
 				var new_pos = pos + down
-				if (units.has(new_pos) or (player_position_to_local() == new_pos)):
+				if (units.has(new_pos) or (player_position == new_pos)):
 					new_pos = pos + (Vector2i(1, 0) if unit.right else Vector2i(-1, 0))
 					new_pos.x = clamp(new_pos.x, 0, map_size.x - 1)
 					
