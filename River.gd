@@ -4,6 +4,7 @@ var spacing = 128.0
 var map = []
 
 var map_size = Vector2i(10, 10)
+var move_unit_size = 128
 
 var sprite = preload("res://lil_guy.tscn")
 @onready var main = $".."
