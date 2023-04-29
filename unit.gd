@@ -10,7 +10,11 @@ func setup(right=true, dynamic=true):
 	self.dynamic = dynamic
 	
 	if dynamic:
-		self_modulate = Color.RED
+		if right:
+			self_modulate = Color.RED
+		else:
+			self_modulate = Color.YELLOW
+			
 	else:
 		self_modulate = Color.GREEN
 

@@ -71,12 +71,15 @@ func any_static(pos):
 func in_range(pos):
 	return pos.x >= 0 and pos.x < map_size.x and pos.y >= 0 and pos.y < map_size.y
 	
+func in_shore_range(pos):
+	return pos.x >= 0 and pos.x < map_size.x
+	
 func push_units(from, pos) -> bool:
 	var new_pos = (pos-from)+pos
 	
 #	print("pushing units! from=", from, " pos=", pos, " new_pos=", new_pos)
 	
-	if not in_range(new_pos) or any_static(new_pos):
+	if not in_shore_range(new_pos) or any_static(new_pos):
 		return false
 	else:
 		if len(get_units(pos)) == 0 or push_units(pos, new_pos):
@@ -106,19 +109,65 @@ func _ready():
 
 var down = Vector2i(0, 1) # ???
 
+func can_flow(try_pos):
+	return not (any_static(try_pos) or player_position == try_pos or not in_shore_range(try_pos))
+	
+func same_flow_unit_at(unit, try_pos):
+	for new_unit in get_units(try_pos):
+		if new_unit.right == unit.right:
+			return true
+	return false
+
+func get_dir(unit):
+	return Vector2i(1, 0) if unit.right else Vector2i(-1, 0)
+
+func try_flow(unit, pos, try_pos):
+	if can_flow(try_pos):
+		for new_unit in get_units(try_pos):
+			flow_unit(new_unit, try_pos)
+			
+		if not same_flow_unit_at(unit, try_pos):
+			move_unit(unit, pos, try_pos)
+			return true
+	return false
+
+func flow_unit(unit, pos):
+	if unit.moved or not unit.dynamic:
+		return
+	
+	var new_pos = pos + down
+	if try_flow(unit, pos, new_pos):
+		return
+	
+	new_pos = pos + down + get_dir(unit)
+	if try_flow(unit, pos, new_pos):
+		return
+		
+	new_pos = pos + get_dir(unit)
+	if try_flow(unit, pos, new_pos):
+		return
+		
+#		new_pos = pos + (Vector2i(1, 0) if unit.right else Vector2i(-1, 0))
+#		new_pos.x = clamp(new_pos.x, 0, map_size.x - 1)
+		
+	
+func refresh_unit(unit):
+	unit.moved = false
+
 func river_flow():
 #	print("----------------------------")
 	for pos in units.keys():
 		for unit in units[pos]:
+			flow_unit(unit, pos)
 #			print("pos=", pos)
-			if unit.dynamic:
-#				print("moving!")
-				var new_pos = pos + down
-				if (units.has(new_pos) or (player_position == new_pos)):
-					new_pos = pos + (Vector2i(1, 0) if unit.right else Vector2i(-1, 0))
-					new_pos.x = clamp(new_pos.x, 0, map_size.x - 1)
-					
-				move_unit(unit, pos, new_pos)
+#			if unit.dynamic:
+#				var new_pos = pos + down
+##				print("moving!")
+#				if (units.has(new_pos) or (player_position == new_pos)):
+#					new_pos = pos + (Vector2i(1, 0) if unit.right else Vector2i(-1, 0))
+#					new_pos.x = clamp(new_pos.x, 0, map_size.x - 1)
+#
+#				move_unit(unit, pos, new_pos)
 	
 	# randomly add new units just above the top of the grid
 	for x in range(map_size.x):
