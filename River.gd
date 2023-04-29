@@ -11,24 +11,40 @@ var sprite = preload("res://lil_guy.tscn")
 #var dynamic = preload("res://dynamic.tscn")
 var unit_prefab = preload("res://unit.tscn")
 
-var player_position = Vector2i.ZERO
+var player_position:Vector2i = Vector2i.ZERO
 
 var units = {}
 
 func add_unit(unit, pos):
+#	print("Adding unit at=", pos, " units.has(pos)=", units.has(pos), " unit?=", unit==null)
 	if units.has(pos):
 		units[pos].append(unit)
 	else:
 		units[pos] = [unit]
 	unit.position = spacing * pos
 		
-func remove_unit(unit, pos):
+func remove_unit(unit, pos:Vector2i):
 	if(units.has(pos)):
+#		print("pre ", len(units[pos]))
 		units[pos].erase(unit)
+#		print("post ", len(units[pos]))
 		if len(units[pos]) == 0:
 			units.erase(pos)
+#		print("post, has=", units.has(pos))
 
-func move_unit(unit, origin, target):
+func find_unit_pos(unit):
+	for pos in units.keys():
+		if unit in units[pos]:
+			print("unit @ ", pos)
+
+func delete_all_units_at(pos:Vector2i):
+	if units.has(pos):
+		for unit in units[pos]:
+			unit.queue_free()
+		units[pos].clear()
+		units.erase(pos)
+
+func move_unit(unit, origin:Vector2i, target:Vector2i):
 	remove_unit(unit, origin)
 	add_unit(unit, target)
 
@@ -39,6 +55,38 @@ func create_unit(unit, pos, dynamic=true, right=true):
 #	instance.position = pos * spacing
 	add_unit(instance, pos)
 	return instance
+	
+func get_units(pos):
+	if units.has(pos):
+		return units[pos]
+	else:
+		return []
+		
+func any_static(pos):
+	for unit in get_units(pos):
+		if not unit.dynamic:
+			return true
+	return false
+	
+func in_range(pos):
+	return pos.x >= 0 and pos.x < map_size.x and pos.y >= 0 and pos.y < map_size.y
+	
+func in_shore_range(pos):
+	return pos.x >= 0 and pos.x < map_size.x
+	
+func push_units(from, pos) -> bool:
+	var new_pos = (pos-from)+pos
+	
+#	print("pushing units! from=", from, " pos=", pos, " new_pos=", new_pos)
+	
+	if not in_shore_range(new_pos) or any_static(new_pos):
+		return false
+	else:
+		if len(get_units(pos)) == 0 or push_units(pos, new_pos):
+			for unit in get_units(pos):
+				move_unit(unit, pos, new_pos)
+			return true
+	return false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -55,24 +103,81 @@ func _ready():
 			s.position = v * spacing
 			
 			if randi() % 20 == 0:
-				add_unit(create_unit(unit_prefab, v, true, randi() % 2 == 0), v)
+				create_unit(unit_prefab, v, true, randi() % 2 == 0)
 			elif randi() % 20 == 1:
-				add_unit(create_unit(unit_prefab, v, false), v)
+				create_unit(unit_prefab, v, false)
 
 var down = Vector2i(0, 1) # ???
+
+func can_flow(try_pos):
+	return not (any_static(try_pos) or player_position == try_pos or not in_shore_range(try_pos))
+	
+func same_flow_unit_at(unit, try_pos):
+	for new_unit in get_units(try_pos):
+		if new_unit.right == unit.right:
+			return true
+	return false
+
+func get_dir(unit):
+	return Vector2i(1, 0) if unit.right else Vector2i(-1, 0)
+
+func try_flow(unit, pos, try_pos):
+	if can_flow(try_pos):
+		for new_unit in get_units(try_pos):
+			flow_unit(new_unit, try_pos)
+			
+		if not same_flow_unit_at(unit, try_pos):
+			move_unit(unit, pos, try_pos)
+			return true
+	return false
+
+func flow_unit(unit, pos):
+	if unit.moved or not unit.dynamic:
+		return
+	
+	var new_pos = pos + down
+	if try_flow(unit, pos, new_pos):
+		return
+	
+	new_pos = pos + down + get_dir(unit)
+	if try_flow(unit, pos, new_pos):
+		return
+		
+	new_pos = pos + get_dir(unit)
+	if try_flow(unit, pos, new_pos):
+		return
+		
+#		new_pos = pos + (Vector2i(1, 0) if unit.right else Vector2i(-1, 0))
+#		new_pos.x = clamp(new_pos.x, 0, map_size.x - 1)
+		
+	
+func refresh_unit(unit):
+	unit.moved = false
 
 func river_flow():
 #	print("----------------------------")
 	for pos in units.keys():
 		for unit in units[pos]:
+			flow_unit(unit, pos)
 #			print("pos=", pos)
-			if unit.dynamic:
-#				print("moving!")
-				var new_pos = pos + down
-				if units.has(new_pos):
-					new_pos = pos + (Vector2i(1, 0) if unit.right else Vector2i(-1, 0))
-					
-				move_unit(unit, pos, new_pos)
+#			if unit.dynamic:
+#				var new_pos = pos + down
+##				print("moving!")
+#				if (units.has(new_pos) or (player_position == new_pos)):
+#					new_pos = pos + (Vector2i(1, 0) if unit.right else Vector2i(-1, 0))
+#					new_pos.x = clamp(new_pos.x, 0, map_size.x - 1)
+#
+#				move_unit(unit, pos, new_pos)
+	
+	# randomly add new units just above the top of the grid
+	for x in range(map_size.x):
+		var v = Vector2i(x, -1)
+		if randi() % 20 == 0:
+			create_unit(unit_prefab, v, true, randi() % 2 == 0)
+	
+	# clear units that are now off the bottom of the grid
+	for x in range(map_size.x):
+		delete_all_units_at(Vector2i(x, map_size.y))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
