@@ -39,10 +39,22 @@ func _ready():
 				stationaries[v] = create(v, stationary)
 	pass # Replace with function body.
 
+var down = Vector2i(0, -1) # ???
+
 func _input(event):
 	if event.is_action_pressed("next_turn"):
-		
-		pass
+		for pos in dynamics.keys():
+			var new_pos = pos + down
+			if stationaries.has(new_pos):
+				new_pos = pos + (Vector2i(1, 0) if dynamics[pos].right else Vector2i(-1, 0))
+				if stationaries.has(new_pos):
+					new_pos = pos
+			
+			dynamics[new_pos] = dynamics[pos]
+			dynamics.erase(pos)
+			dynamics[new_pos].position = spacing * new_pos
+				
+			
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
