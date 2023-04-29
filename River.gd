@@ -39,6 +39,38 @@ func create_unit(unit, pos, dynamic=true, right=true):
 #	instance.position = pos * spacing
 	add_unit(instance, pos)
 	return instance
+	
+func get_units(pos):
+	if units.has(pos):
+		return units[pos]
+	else:
+		return []
+		
+func any_static(pos):
+	for unit in get_units(pos):
+		if not unit.dynamic:
+			return true
+	return false
+		
+func player_position_to_local():
+	return Vector2i(player_position/spacing)
+	
+func in_range(pos):
+	return pos.x >= 0 and pos.x < map_size.x and pos.y >= 0 and pos.y < map_size.y
+	
+func push_units(from, pos) -> bool:
+	var new_pos = (pos-from)+pos
+	
+	print("pushing units! from=", from, " pos=", pos, " new_pos=", new_pos)
+	
+	if not in_range(new_pos) or any_static(new_pos):
+		return false
+	else:
+		if len(get_units(pos)) == 0 or push_units(pos, new_pos):
+			for unit in get_units(pos):
+				move_unit(unit, pos, new_pos)
+			return true
+	return false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

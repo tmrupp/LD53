@@ -16,7 +16,7 @@ var soul_capacity:int = 4 # max number of souls you can carry at once
 var current_soul_count:int = 0 # number of souls currently being carried
 
 var strength:int = 6 # amount of "free pushes"
-var max_strength:int = 6
+var strength_capacity:int = 6 # amount to replenish when on shore
 
 func _ready():
 	position = Vector2i(-move_unit_size, 0)
@@ -24,9 +24,15 @@ func _ready():
 func _process(delta):
 	river.player_position = position
 	
+func interact_with_unit(direction:Vector2i):
+	var lpp = river.player_position_to_local()
+	print("lpp=", lpp, " direction=", direction)
+	return river.push_units(lpp, lpp+direction)
+	
 func _input(event):
 	# movement
 	if event.is_action_pressed("MoveRight") and position.x < river.map_size.x * move_unit_size and current_moves_remaining > 0:
+		interact_with_unit(Vector2i(1,0))
 		position.x += move_unit_size
 		on_move()
 		if state == BOAT_STATE.On_Left:
@@ -37,6 +43,7 @@ func _input(event):
 			riverbanks.deposit_on_right(current_soul_count)
 			current_soul_count = 0
 	elif event.is_action_pressed("MoveLeft") and position.x >= 0 and current_moves_remaining > 0:
+		interact_with_unit(Vector2i(-1,0))
 		position.x -= move_unit_size
 		on_move()
 		if state == BOAT_STATE.On_Right:
@@ -45,14 +52,17 @@ func _input(event):
 			state = BOAT_STATE.On_Left
 			current_moves_remaining = max_speed
 	elif event.is_action_pressed("MoveUp") and position.y > 0:
+		interact_with_unit(Vector2i(0,-1))
 		position.y -= move_unit_size
 		on_move()
 	elif event.is_action_pressed("MoveDown") and position.y < (river.map_size.y - 1) * move_unit_size and current_moves_remaining > 0:
+		interact_with_unit(Vector2i(0, 1))
 		position.y += move_unit_size
 		on_move()
 	
 	# soul collection
 	if state == BOAT_STATE.On_Left:
+		strength = strength_capacity
 		if event.is_action_pressed("CollectSouls"):
 			riverbanks.collect_from_left(1)
 			current_soul_count += 1
@@ -66,6 +76,7 @@ func on_move():
 		if current_moves_remaining <= 0:
 			river.river_flow()
 			current_moves_remaining = max_speed
+	
 	
 func on_river_flow():
 	current_moves_remaining = max_speed
