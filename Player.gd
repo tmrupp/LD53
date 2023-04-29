@@ -15,6 +15,9 @@ var current_moves_remaining:int = max_speed
 var soul_capacity:int = 4 # max number of souls you can carry at once
 var current_soul_count:int = 0 # number of souls currently being carried
 
+var strength:int = 6 # amount of "free pushes"
+var max_strength:int = 6
+
 func _ready():
 	position = Vector2i(-move_unit_size, 0)
 

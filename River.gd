@@ -36,7 +36,7 @@ func create_unit(unit, pos, dynamic=true, right=true):
 	var instance = unit.instantiate()
 	instance.setup(right, dynamic)
 	add_child(instance)
-	instance.position = pos * spacing
+#	instance.position = pos * spacing
 	add_unit(instance, pos)
 	return instance
 
@@ -62,12 +62,12 @@ func _ready():
 var down = Vector2i(0, 1) # ???
 
 func river_flow():
-	print("----------------------------")
+#	print("----------------------------")
 	for pos in units.keys():
 		for unit in units[pos]:
-			print("pos=", pos)
+#			print("pos=", pos)
 			if unit.dynamic:
-				print("moving!")
+#				print("moving!")
 				var new_pos = pos + down
 				if units.has(new_pos):
 					new_pos = pos + (Vector2i(1, 0) if unit.right else Vector2i(-1, 0))
