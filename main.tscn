@@ -59,7 +59,6 @@ text = "Carrying X souls"
 script = ExtResource("7_7tojl")
 
 [node name="LeftBankSouls" type="Label" parent="UI"]
-visible = false
 offset_left = -309.0
 offset_top = -213.0
 offset_bottom = -160.0
@@ -68,7 +67,6 @@ text = "Left Bank: X Souls"
 script = ExtResource("8_27uy0")
 
 [node name="RightBankSouls" type="Label" parent="UI"]
-visible = false
 offset_left = 1152.0
 offset_top = -223.0
 offset_right = 1483.0
