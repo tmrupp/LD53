@@ -32,6 +32,10 @@ func remove_unit(unit, pos:Vector2i):
 			units.erase(pos)
 #		print("post, has=", units.has(pos))
 
+func delete_unit(unit, pos:Vector2i):
+	remove_unit(unit, pos)
+	unit.queue_free()
+
 func find_unit_pos(unit):
 	for pos in units.keys():
 		if unit in units[pos]:
@@ -89,6 +93,7 @@ func push_units(from, pos) -> bool:
 	return false
 
 # Called when the node enters the scene tree for the first time.
+var gen = false
 func _ready():
 	randomize()
 		
@@ -102,10 +107,11 @@ func _ready():
 			add_child(s)
 			s.position = v * spacing
 			
-			if randi() % 20 == 0:
-				create_unit(unit_prefab, v, true, randi() % 2 == 0)
-			elif randi() % 20 == 1:
-				create_unit(unit_prefab, v, false)
+			if (gen):
+				if randi() % 20 == 0:
+					create_unit(unit_prefab, v, true, randi() % 2 == 0)
+				elif randi() % 20 == 1:
+					create_unit(unit_prefab, v, false)
 
 var down = Vector2i(0, 1) # ???
 
@@ -128,14 +134,18 @@ func try_flow(unit, pos, try_pos):
 			
 		if not same_flow_unit_at(unit, try_pos):
 			move_unit(unit, pos, try_pos)
+			unit.moved = true
 			return true
 	return false
 
 func flow_unit(unit, pos):
+	print("flowing unit=", unit, " @ ", pos)
 	if unit.moved or not unit.dynamic:
 		return
 	
-	var new_pos = pos + down
+	var new_pos = pos
+	
+	new_pos = pos + down
 	if try_flow(unit, pos, new_pos):
 		return
 	
@@ -149,16 +159,50 @@ func flow_unit(unit, pos):
 		
 #		new_pos = pos + (Vector2i(1, 0) if unit.right else Vector2i(-1, 0))
 #		new_pos.x = clamp(new_pos.x, 0, map_size.x - 1)
+	unit.moved = true
 		
 	
 func refresh_unit(unit):
 	unit.moved = false
+	
+func to_grid_pos(pos):
+	return Vector2i((pos+Vector2.ONE*spacing/2)/spacing)
+	
+func _input(event):
+	if event is InputEventMouseButton and event.is_pressed():
+		print("clicked at, ", to_grid_pos(get_global_mouse_position()), " glob=", get_global_mouse_position())
+		var pos = to_grid_pos(get_global_mouse_position())
+		if len(get_units(pos)) == 0:
+			create_unit(unit_prefab, pos, true, true)
+		else:
+			var unit = get_units(pos)[0]
+			if unit.dynamic and unit.right:
+				unit.right = false
+			elif unit.dynamic:
+				unit.dynamic = false
+			else:
+				delete_unit(unit, pos)
+				
+			unit.update()
+			
+func get_all_units():
+	var all_units = []
+	for pos in units.keys():
+		for unit in units[pos]:
+			all_units.append(unit)
+	return all_units
+	
 
 func river_flow():
 #	print("----------------------------")
 	for pos in units.keys():
-		for unit in units[pos]:
-			flow_unit(unit, pos)
+		var units_at = []
+		units_at.append_array(units[pos])
+		for unit in units_at:
+			print("trying to flow: ", unit, " ", str(unit), " pos=", pos)
+			if unit.dynamic:
+				print(len(units[pos]))
+				flow_unit(unit, pos)
 #			print("pos=", pos)
 #			if unit.dynamic:
 #				var new_pos = pos + down
@@ -168,12 +212,17 @@ func river_flow():
 #					new_pos.x = clamp(new_pos.x, 0, map_size.x - 1)
 #
 #				move_unit(unit, pos, new_pos)
+
+	for pos in units.keys():
+		for unit in units[pos]:
+			refresh_unit(unit)
 	
 	# randomly add new units just above the top of the grid
-	for x in range(map_size.x):
-		var v = Vector2i(x, -1)
-		if randi() % 20 == 0:
-			create_unit(unit_prefab, v, true, randi() % 2 == 0)
+	if (gen):
+		for x in range(map_size.x):
+			var v = Vector2i(x, -1)
+			if randi() % 20 == 0:
+				create_unit(unit_prefab, v, true, randi() % 2 == 0)
 	
 	# clear units that are now off the bottom of the grid
 	for x in range(map_size.x):
