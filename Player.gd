@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name Player
+
 @onready var river:Node = $"../River"
 @onready var riverbanks:Node = $"../River/Riverbanks"
 @onready var ui_speed:Node = $"../UI/Speed"
