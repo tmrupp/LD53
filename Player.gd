@@ -132,13 +132,13 @@ func _input(event):
 	if state == BOAT_STATE.On_Left:
 		strength.refresh()
 		if event.is_action_pressed("CollectSouls"):
-			if riverbanks.left_bank_souls > 0:
+			if riverbanks.left_bank_souls > 0 and souls.current < souls.capacity:
 				riverbanks.collect_from_left(1)
 				souls.modify(1)
 		elif event.is_action_pressed("DropSouls"):
 			if souls.current > 0:
 				riverbanks.deposit_on_left(1)
-				souls.modify(1)
+				souls.modify(-1)
 			
 	# set visual position based on grid position
 	position = move_unit_size * grid_position
