@@ -11,8 +11,8 @@ var sprite = preload("res://lil_guy.tscn")
 #var dynamic = preload("res://dynamic.tscn")
 var unit_prefab = preload("res://unit.tscn")
 
-var player_position:Vector2i = Vector2i.ZERO
 @onready var player = $"../Player"
+var player_position:Vector2i = Vector2i.ZERO
 var units = {}
 
 func add_unit(unit, pos):
@@ -153,8 +153,14 @@ func _ready():
 
 var down = Vector2i(0, 1) # ???
 
+enum {Open_Space, Player_Occupied, Other_Occupied}
 func can_flow(try_pos):
-	return not (any_static(try_pos) or player_position == try_pos or not in_shore_range(try_pos))
+	if player_position == try_pos:
+		return Player_Occupied
+	if any_static(try_pos) or not in_shore_range(try_pos):
+		return Other_Occupied
+	return Open_Space
+	# return not (any_static(try_pos) or player_position == try_pos or not in_shore_range(try_pos))
 	
 func same_flow_unit_at(unit, try_pos):
 	for new_unit in get_units(try_pos):
@@ -166,7 +172,8 @@ func get_dir(unit):
 	return Vector2i(1, 0) if unit.right else Vector2i(-1, 0)
 
 func try_flow(unit, pos, try_pos):
-	if can_flow(try_pos):
+	var can_flow_state = can_flow(try_pos)
+	if can_flow_state == Open_Space:
 		if not same_flow_unit_at(unit, try_pos):
 			move_unit(unit, pos, try_pos)
 			unit.moved = true
@@ -174,7 +181,8 @@ func try_flow(unit, pos, try_pos):
 			
 		for new_unit in get_units(try_pos):
 			flow_unit(new_unit, try_pos)
-			
+	elif can_flow_state == Player_Occupied:
+		unit.deal_damage_to_player(player)
 	return false
 
 func flow_unit(unit, pos):
