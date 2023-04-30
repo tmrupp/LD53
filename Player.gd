@@ -29,6 +29,7 @@ var souls
 var delivery_num:int = 1 # number of deliveries made this run
 
 @onready var animation_player:AnimationPlayer = $"garon/AnimationPlayer"
+@onready var player_visual:Node2D = $"garon"
 
 class Stat:
 	var capacity:int = 4
@@ -65,7 +66,10 @@ func _process(delta):
 
 func _ready():
 	grid_position = Vector2i(-1, 0)
-	animation_player.play("idle")
+	animation_player.get_animation("push").set_loop_mode(0)
+	animation_player.get_animation("paddle").set_loop_mode(0)
+	animation_player.stop()
+	player_visual.scale.x = -absf(player_visual.scale.x)
 	full_reset()
 	
 func next_level():
@@ -87,7 +91,16 @@ func interact_with_unit(direction:Vector2i):
 	# print("lpp=", grid_position, " direction=", direction)
 	for unit in river.get_units(grid_position+direction):
 		unit.deal_damage_to_player(self)
-	return river.push_units(grid_position, grid_position+direction)
+	var status:River.PUSH_STATUS = river.push_units(grid_position, grid_position+direction)
+	
+	# set animation based on if we had to push or not
+	if status == River.PUSH_STATUS.No_Push_Required:
+		animation_player.play("paddle")
+	if status == River.PUSH_STATUS.Can_Push:
+		animation_player.play("push")
+	animation_player.queue("idle")
+	
+	return status
 	
 func deliver():
 #	current_moves_remaining = max_speed
@@ -106,7 +119,7 @@ func _input(event):
 	if event.is_action_pressed("Wait"):
 		on_move()
 	elif event.is_action_pressed("MoveRight") and grid_position.x < river.map_size.x and speed.has():
-		if interact_with_unit(Vector2i(1,0)):
+		if interact_with_unit(Vector2i(1,0)) != River.PUSH_STATUS.Cant_Push:
 			grid_position.x += 1
 			on_move()
 			if state == BOAT_STATE.On_Left:
@@ -115,7 +128,7 @@ func _input(event):
 				state = BOAT_STATE.On_Right
 				deliver()
 	elif event.is_action_pressed("MoveLeft") and grid_position.x >= 0 and speed.has():
-		if interact_with_unit(Vector2i(-1,0)):
+		if interact_with_unit(Vector2i(-1,0)) != River.PUSH_STATUS.Cant_Push:
 			grid_position.x -= 1
 			on_move()
 			if state == BOAT_STATE.On_Right:
@@ -124,13 +137,16 @@ func _input(event):
 				state = BOAT_STATE.On_Left
 				speed.refresh()
 	elif event.is_action_pressed("MoveUp") and grid_position.y > 0:
-		if interact_with_unit(Vector2i(0,-1)):
+		if interact_with_unit(Vector2i(0,-1)) != River.PUSH_STATUS.Cant_Push:
 			grid_position.y -= 1
 			on_move()
 	elif event.is_action_pressed("MoveDown") and grid_position.y < (river.map_size.y - 1) * move_unit_size and speed.has():
-		if interact_with_unit(Vector2i(0, 1)):
+		if interact_with_unit(Vector2i(0, 1)) != River.PUSH_STATUS.Cant_Push:
 			grid_position.y += 1
 			on_move()
+	
+	if state == BOAT_STATE.On_Left or state == BOAT_STATE.On_Right:
+		animation_player.stop()
 	
 	# soul collection
 	if state == BOAT_STATE.On_Left:

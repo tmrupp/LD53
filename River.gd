@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name River
+
 var spacing = 128.0
 var map = []
 
@@ -90,24 +92,25 @@ func in_range(pos):
 	
 func in_shore_range(pos):
 	return pos.x >= 0 and pos.x < map_size.x
-	
-func push_units(from, pos) -> bool:
+
+enum PUSH_STATUS {Cant_Push, Can_Push, No_Push_Required}
+func push_units(from, pos) -> PUSH_STATUS:
 	var new_pos = (pos-from)+pos
 	
 	if len(get_units(pos)) == 0:
-		return true
+		return PUSH_STATUS.No_Push_Required
 		
 	if any_not_pushable(pos):
-		return false
+		return PUSH_STATUS.Cant_Push
 	
 	if not in_shore_range(new_pos) or any_not_pushable(new_pos):
-		return false
+		return PUSH_STATUS.Cant_Push
 	else:
-		if push_units(pos, new_pos):
+		if push_units(pos, new_pos) != PUSH_STATUS.Cant_Push:
 			for unit in get_units(pos):
 				move_unit(unit, pos, new_pos)
-			return true
-	return false
+			return PUSH_STATUS.Can_Push
+	return PUSH_STATUS.Cant_Push
 
 # Called when the node enters the scene tree for the first time.
 var gen = true
