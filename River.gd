@@ -13,7 +13,7 @@ var unit_prefab = preload("res://unit.tscn")
 
 @onready var player = $"../Player"
 var player_position:Vector2i = Vector2i.ZERO
-
+@onready var player = $"../Player"
 var units = {}
 
 func add_unit(unit, pos):
@@ -48,6 +48,13 @@ func delete_all_units_at(pos:Vector2i):
 			unit.queue_free()
 		units[pos].clear()
 		units.erase(pos)
+		
+func delete_all_units():
+	for pos in units.keys():
+		for unit in units[pos]:
+			unit.queue_free()
+		units[pos].clear()
+	units.clear()
 
 func move_unit(unit, origin:Vector2i, target:Vector2i):
 	remove_unit(unit, origin)
@@ -104,7 +111,32 @@ func push_units(from, pos) -> bool:
 	return false
 
 # Called when the node enters the scene tree for the first time.
-var gen = false
+var gen = true
+@onready var riverbanks = $Riverbanks
+func generate_starting_units():
+	for x in range(map_size.x):
+		for y in range(map_size.y):
+			var v = Vector2i(x, y)
+			if randi() % 20 == 0:
+				create_unit(unit_prefab, v, true, randi() % 2 == 0)
+			elif randi() % 20 == 1:
+				create_unit(unit_prefab, v, false)
+
+var level = 1
+
+func full_reset():
+	level = 1
+	player.full_reset()
+	next_level()
+
+func next_level():
+	delete_all_units()
+	riverbanks.reset(12*level)
+	if (gen):
+		generate_starting_units()
+	player.next_level()
+	level += 1
+	
 func _ready():
 	randomize()
 		
@@ -118,11 +150,7 @@ func _ready():
 			add_child(s)
 			s.position = v * spacing
 			
-			if (gen):
-				if randi() % 20 == 0:
-					create_unit(unit_prefab, v, true, randi() % 2 == 0)
-				elif randi() % 20 == 1:
-					create_unit(unit_prefab, v, false)
+	next_level()
 
 var down = Vector2i(0, 1) # ???
 
@@ -222,14 +250,16 @@ func get_all_units():
 
 func river_flow():
 #	print("----------------------------")
-	for pos in units.keys():
+	var keys_at = []
+	keys_at.append_array(units.keys())
+	for pos in keys_at:
 		var units_at = []
 		units_at.append_array(units[pos])
 		for unit in units_at:
 			unit.layered = len(units_at) > 1
 #			print("trying to flow: ", unit, " ", str(unit), " pos=", pos)
 			if unit.dynamic:
-				print(len(units[pos]))
+#				print(len(units[pos]))
 				flow_unit(unit, pos)
 #			print("pos=", pos)
 #			if unit.dynamic:
