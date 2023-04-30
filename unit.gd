@@ -3,15 +3,17 @@ extends Sprite2D
 var right:bool = true
 var dynamic:bool = true
 var moved:bool = false
+var layered:bool = false
 
 func setup(right=true, dynamic=true):
 	moved = false
 	self.right = right
 	self.dynamic = dynamic
+	self.layered = false
 	update()
 	
 func _to_string():
-	return "right=" + str(right) + " moved=" + str(moved) + " dynamic=" + str(dynamic)
+	return "right=" + str(right) + " moved=" + str(moved) + " dynamic=" + str(dynamic) + " layered=" + str(layered)
 
 func update():
 	if dynamic:

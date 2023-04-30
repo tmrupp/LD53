@@ -145,9 +145,10 @@ func flow_unit(unit, pos):
 	
 	var new_pos = pos
 	
-	new_pos = pos + down
-	if try_flow(unit, pos, new_pos):
-		return
+	if (not unit.layered):
+		new_pos = pos + down
+		if try_flow(unit, pos, new_pos):
+			return
 	
 	new_pos = pos + down + get_dir(unit)
 	if try_flow(unit, pos, new_pos):
@@ -156,6 +157,12 @@ func flow_unit(unit, pos):
 	new_pos = pos + get_dir(unit)
 	if try_flow(unit, pos, new_pos):
 		return
+		
+	
+	if (unit.layered):
+		new_pos = pos + down
+		if try_flow(unit, pos, new_pos):
+			return
 		
 #		new_pos = pos + (Vector2i(1, 0) if unit.right else Vector2i(-1, 0))
 #		new_pos.x = clamp(new_pos.x, 0, map_size.x - 1)
@@ -199,6 +206,7 @@ func river_flow():
 		var units_at = []
 		units_at.append_array(units[pos])
 		for unit in units_at:
+			unit.layered = len(units_at) > 1
 			print("trying to flow: ", unit, " ", str(unit), " pos=", pos)
 			if unit.dynamic:
 				print(len(units[pos]))
