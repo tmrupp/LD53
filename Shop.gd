@@ -26,7 +26,6 @@ class Option:
 	func show():
 		button.text = "Increase " + label + "\ncost: " + str(cost) + "\ncurrent: " + str(stat.capacity)
 		
-	
 	func can_buy():
 #		print("button=", button)
 #		print("shop=", shop)
