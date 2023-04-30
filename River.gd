@@ -13,7 +13,6 @@ var unit_prefab = preload("res://unit.tscn")
 
 @onready var player = $"../Player"
 var player_position:Vector2i = Vector2i.ZERO
-@onready var player = $"../Player"
 var units = {}
 
 func add_unit(unit, pos):
