@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-@onready var coin_label = $Top/Coins
+@onready var coin_label = $Top/PanelContainer/HBoxContainer/Coins
 var coins = 0
 
 @onready var player = $"../Player"
@@ -67,7 +67,7 @@ func _ready():
 
 func delta_coins(value:int):
 	coins += value
-	coin_label.text = "Coins: " + str(coins)
+	coin_label.text = ": " + str(coins) + "  "
 
 func update_shop():
 	for option in options_list:

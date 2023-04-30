@@ -53,7 +53,8 @@ class Stat:
 		current += value
 		
 	func show():
-		label.text = stat_name + ": " + str(current) + "/" + str(capacity)
+		var postlude = "  " if stat_name == "" else "" 
+		label.text = stat_name + ": " + str(current) + "/" + str(capacity) + postlude
 
 func _process(delta):
 	speed.show()
@@ -76,7 +77,7 @@ func next_level():
 func full_reset():
 	speed = Stat.new(3, $"../Shop/Top/Speed", "speed",  3)
 	strength = Stat.new(6, $"../Shop/Top/Strength", "strength")
-	souls = Stat.new(4, $"../Shop/Top/Souls", "souls")
+	souls = Stat.new(4, $"../Shop/Top/PanelContainer2/HBoxContainer/Souls", "")
 	next_level()
 	
 func interact_with_unit(direction:Vector2i):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cgg7fyj7qb0qu"]
+[gd_scene load_steps=15 format=3 uid="uid://cgg7fyj7qb0qu"]
 
 [ext_resource type="Texture2D" uid="uid://c6o0ro4o3waef" path="res://icon.svg" id="1_qpcv4"]
 [ext_resource type="Script" path="res://River.gd" id="2_ownun"]
@@ -12,6 +12,8 @@
 [ext_resource type="Script" path="res://Shop.gd" id="9_p22ci"]
 [ext_resource type="Script" path="res://Exit.gd" id="10_6k82o"]
 [ext_resource type="Script" path="res://Restart.gd" id="11_elxc3"]
+[ext_resource type="Texture2D" uid="uid://cu8f5jbjxm6hx" path="res://art/coin.png" id="13_w2vgq"]
+[ext_resource type="Texture2D" uid="uid://ccbqxhq86yvpd" path="res://art/soul.png" id="14_m8472"]
 
 [node name="Main" type="Node2D"]
 
@@ -98,7 +100,34 @@ script = ExtResource("11_elxc3")
 layout_mode = 2
 text = "Shop"
 
-[node name="Coins" type="Label" parent="Shop/Top"]
+[node name="PanelContainer" type="PanelContainer" parent="Shop/Top"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/Top/PanelContainer"]
+layout_mode = 2
+
+[node name="CoinTextureRect" type="TextureRect" parent="Shop/Top/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+texture = ExtResource("13_w2vgq")
+expand_mode = 3
+
+[node name="Coins" type="Label" parent="Shop/Top/PanelContainer/HBoxContainer"]
+layout_mode = 2
+text = "Something:"
+
+[node name="PanelContainer2" type="PanelContainer" parent="Shop/Top"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/Top/PanelContainer2"]
+layout_mode = 2
+
+[node name="SoulTextureRect" type="TextureRect" parent="Shop/Top/PanelContainer2/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("14_m8472")
+expand_mode = 3
+
+[node name="Souls" type="Label" parent="Shop/Top/PanelContainer2/HBoxContainer"]
 layout_mode = 2
 text = "Something:"
 
@@ -107,10 +136,6 @@ layout_mode = 2
 text = "Something:"
 
 [node name="Speed" type="Label" parent="Shop/Top"]
-layout_mode = 2
-text = "Something:"
-
-[node name="Souls" type="Label" parent="Shop/Top"]
 layout_mode = 2
 text = "Something:"
 
