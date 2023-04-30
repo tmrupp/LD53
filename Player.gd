@@ -51,6 +51,16 @@ class Stat:
 
 func _ready():
 	grid_position = Vector2i(-1, 0)
+	
+func reset():
+	grid_position = Vector2i(-1, 0)
+	position = move_unit_size * grid_position
+	
+	speed.refresh()
+	strength.refresh()
+	souls.clear()
+	delivery_num = 1
+	
 
 #func _process(delta):
 #	river.player_position = position
@@ -68,6 +78,10 @@ func deliver():
 	delivery_num += 1
 	riverbanks.deposit_on_right(souls.current)
 	souls.clear()
+	
+	# all souls delivered
+	if riverbanks.left_bank_souls == 0:
+		river.next_level()
 	
 func _input(event):
 	# movement
