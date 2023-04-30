@@ -104,22 +104,32 @@ script = ExtResource("9_by223")
 script = ExtResource("9_p22ci")
 
 [node name="Top" type="HBoxContainer" parent="Shop"]
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+size_flags_horizontal = 3
 
 [node name="Exit" type="Button" parent="Shop/Top"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Exit
 "
 script = ExtResource("10_6k82o")
 
 [node name="Restart" type="Button" parent="Shop/Top"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Restart
 "
 script = ExtResource("11_elxc3")
 
+[node name="Panel" type="Panel" parent="Shop/Top"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="OpenShop" type="Button" parent="Shop/Top"]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Shop"
 
