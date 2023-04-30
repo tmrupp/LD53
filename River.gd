@@ -222,6 +222,7 @@ func to_grid_pos(pos):
 	return Vector2i((pos+Vector2.ONE*spacing/2)/spacing)
 	
 func _input(event):
+	return
 	if event is InputEventMouseButton and event.is_pressed():
 #		print("clicked at, ", to_grid_pos(get_global_mouse_position()), " glob=", get_global_mouse_position())
 		var pos = to_grid_pos(get_global_mouse_position())
