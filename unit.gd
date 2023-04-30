@@ -9,6 +9,8 @@ var damage_type_is_proportional:bool = true
 
 var pushable:bool = true
 
+var damage_label:Label = null
+
 func setup(right=true, dynamic=true, damage=0, damage_type_is_proportional=true):
 	moved = false
 	self.right = right
@@ -60,4 +62,13 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if damage > 0:
+		if damage_label == null:
+			damage_label = Label.new()
+			add_child(damage_label)
+		damage_label.text = str(damage)
+		damage_label.add_theme_font_size_override("font_size", 72)
+	else:
+		if damage_label != null:
+			damage_label.queue_free()
+			

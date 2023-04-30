@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cgg7fyj7qb0qu"]
+[gd_scene load_steps=11 format=3 uid="uid://cgg7fyj7qb0qu"]
 
 [ext_resource type="Texture2D" uid="uid://c6o0ro4o3waef" path="res://icon.svg" id="1_qpcv4"]
 [ext_resource type="Script" path="res://River.gd" id="2_ownun"]
 [ext_resource type="Script" path="res://Riverbanks.gd" id="3_npkt8"]
 [ext_resource type="Script" path="res://Player.gd" id="3_rl8sr"]
+[ext_resource type="Script" path="res://GiveDamageToUnit.gd" id="3_xymk3"]
 [ext_resource type="Script" path="res://UISpeed.gd" id="5_aivmp"]
 [ext_resource type="Script" path="res://UISoulsCarried.gd" id="7_7tojl"]
 [ext_resource type="Script" path="res://UILeftBankSouls.gd" id="8_27uy0"]
@@ -17,6 +18,9 @@ script = ExtResource("2_ownun")
 
 [node name="Riverbanks" type="Node" parent="River"]
 script = ExtResource("3_npkt8")
+
+[node name="GiveDamage" type="Node2D" parent="River"]
+script = ExtResource("3_xymk3")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(512, 400)
