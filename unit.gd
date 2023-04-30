@@ -38,7 +38,7 @@ func deal_damage_to_player(player:Player):
 	var damage_to_deal:int = 0
 	
 	if damage_type_is_proportional: #damage dealt is proportional to number of souls carried
-		damage_to_deal = int(float(player.current_soul_count) / damage)
+		damage_to_deal = int(float(player.current_soul_count) / damage + 0.5)
 	else: #damage dealt is a fixed amount
 		damage_to_deal = damage
 	
