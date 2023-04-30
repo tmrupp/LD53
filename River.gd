@@ -213,14 +213,16 @@ func get_all_units():
 
 func river_flow():
 #	print("----------------------------")
-	for pos in units.keys():
+	var keys_at = []
+	keys_at.append_array(units.keys())
+	for pos in keys_at:
 		var units_at = []
 		units_at.append_array(units[pos])
 		for unit in units_at:
 			unit.layered = len(units_at) > 1
 #			print("trying to flow: ", unit, " ", str(unit), " pos=", pos)
 			if unit.dynamic:
-				print(len(units[pos]))
+#				print(len(units[pos]))
 				flow_unit(unit, pos)
 #			print("pos=", pos)
 #			if unit.dynamic:
