@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cgg7fyj7qb0qu"]
+[gd_scene load_steps=12 format=3 uid="uid://cgg7fyj7qb0qu"]
 
 [ext_resource type="Texture2D" uid="uid://c6o0ro4o3waef" path="res://icon.svg" id="1_qpcv4"]
 [ext_resource type="Script" path="res://River.gd" id="2_ownun"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" path="res://UILeftBankSouls.gd" id="8_27uy0"]
 [ext_resource type="Script" path="res://UIRightBankSouls.gd" id="9_by223"]
 [ext_resource type="Script" path="res://Shop.gd" id="9_p22ci"]
+[ext_resource type="Script" path="res://Exit.gd" id="10_6k82o"]
+[ext_resource type="Script" path="res://Restart.gd" id="11_elxc3"]
 
 [node name="Main" type="Node2D"]
 
@@ -73,6 +75,18 @@ script = ExtResource("9_p22ci")
 [node name="Top" type="HBoxContainer" parent="Shop"]
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="Exit" type="Button" parent="Shop/Top"]
+layout_mode = 2
+text = "Exit
+"
+script = ExtResource("10_6k82o")
+
+[node name="Restart" type="Button" parent="Shop/Top"]
+layout_mode = 2
+text = "Restart
+"
+script = ExtResource("11_elxc3")
 
 [node name="OpenShop" type="Button" parent="Shop/Top"]
 layout_mode = 2
