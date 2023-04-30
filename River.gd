@@ -129,13 +129,14 @@ func get_dir(unit):
 
 func try_flow(unit, pos, try_pos):
 	if can_flow(try_pos):
-		for new_unit in get_units(try_pos):
-			flow_unit(new_unit, try_pos)
-			
 		if not same_flow_unit_at(unit, try_pos):
 			move_unit(unit, pos, try_pos)
 			unit.moved = true
 			return true
+			
+		for new_unit in get_units(try_pos):
+			flow_unit(new_unit, try_pos)
+			
 	return false
 
 func flow_unit(unit, pos):
@@ -157,7 +158,6 @@ func flow_unit(unit, pos):
 	new_pos = pos + get_dir(unit)
 	if try_flow(unit, pos, new_pos):
 		return
-		
 	
 	if (unit.layered):
 		new_pos = pos + down

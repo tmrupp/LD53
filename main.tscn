@@ -65,3 +65,13 @@ offset_bottom = -170.0
 theme_override_font_sizes/font_size = 36
 text = "Right Bank: X Souls"
 script = ExtResource("9_by223")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+text = "Something:"
