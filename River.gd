@@ -123,12 +123,17 @@ func generate_starting_units():
 
 var level = 1
 
+func full_reset():
+	level = 1
+	player.full_reset()
+	next_level()
+
 func next_level():
 	delete_all_units()
 	riverbanks.reset(12*level)
 	if (gen):
 		generate_starting_units()
-	player.reset()
+	player.next_level()
 	level += 1
 	
 func _ready():
@@ -239,7 +244,6 @@ func river_flow():
 	var keys_at = []
 	keys_at.append_array(units.keys())
 	for pos in keys_at:
-		print("pos=", pos)
 		var units_at = []
 		units_at.append_array(units[pos])
 		for unit in units_at:

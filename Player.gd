@@ -52,7 +52,7 @@ class Stat:
 func _ready():
 	grid_position = Vector2i(-1, 0)
 	
-func reset():
+func next_level():
 	grid_position = Vector2i(-1, 0)
 	position = move_unit_size * grid_position
 	
@@ -60,6 +60,12 @@ func reset():
 	strength.refresh()
 	souls.clear()
 	delivery_num = 1
+	
+func full_reset():
+	speed = Stat.new(3, 3)
+	strength = Stat.new(6)
+	souls = Stat.new(4)
+	next_level()
 	
 
 #func _process(delta):
