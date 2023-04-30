@@ -28,6 +28,8 @@ var souls
 
 var delivery_num:int = 1 # number of deliveries made this run
 
+@onready var animation_player:AnimationPlayer = $"garon/AnimationPlayer"
+
 class Stat:
 	var capacity:int = 4
 	var current:int = 0
@@ -63,6 +65,7 @@ func _process(delta):
 
 func _ready():
 	grid_position = Vector2i(-1, 0)
+	animation_player.play("idle")
 	full_reset()
 	
 func next_level():

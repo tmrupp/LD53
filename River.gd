@@ -138,9 +138,7 @@ func next_level():
 	
 func _ready():
 	randomize()
-		
-	# assuming a square rn
-	spacing = sprite.instantiate().texture.get_width()
+	
 #	print(spacing)
 	for x in range(map_size.x):
 		for y in range(map_size.y):
