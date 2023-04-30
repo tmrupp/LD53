@@ -135,6 +135,7 @@ text = "Shop"
 
 [node name="PanelContainer" type="PanelContainer" parent="Shop/Top"]
 layout_mode = 2
+tooltip_text = "Coins"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Shop/Top/PanelContainer"]
 layout_mode = 2
@@ -151,6 +152,7 @@ text = "Something:"
 
 [node name="PanelContainer2" type="PanelContainer" parent="Shop/Top"]
 layout_mode = 2
+tooltip_text = "Souls"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Shop/Top/PanelContainer2"]
 layout_mode = 2
@@ -166,6 +168,7 @@ text = "Something:"
 
 [node name="PanelContainer3" type="PanelContainer" parent="Shop/Top"]
 layout_mode = 2
+tooltip_text = "Strength"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Shop/Top/PanelContainer3"]
 layout_mode = 2
@@ -181,6 +184,7 @@ text = "Something:"
 
 [node name="PanelContainer4" type="PanelContainer" parent="Shop/Top"]
 layout_mode = 2
+tooltip_text = "Speed"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Shop/Top/PanelContainer4"]
 layout_mode = 2
