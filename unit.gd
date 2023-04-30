@@ -47,12 +47,16 @@ func deal_damage_to_player(player:Player):
 	# deal damage to strength first
 	var damage_left_to_deal = damage_to_deal
 	damage_left_to_deal -= player.strength.current
+	if damage_left_to_deal < 0:
+		damage_left_to_deal = 0
 	player.strength.current -= damage_to_deal
+#	print("dealing ", damage_to_deal, " to strength")
 	if player.strength.current < 0:
 		player.strength.current = 0
 	
 	# deal remaining damage to soul count
 	player.souls.current -= damage_left_to_deal
+#	print("dealing ", damage_left_to_deal, " to souls")
 	if player.souls.current < 0:
 		player.souls.current = 0
 
