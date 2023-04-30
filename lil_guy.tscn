@@ -1,6 +1,36 @@
-[gd_scene load_steps=2 format=3 uid="uid://d3wa2v70apwfv"]
+[gd_scene load_steps=8 format=3 uid="uid://cgaw6yey8lhd8"]
 
 [ext_resource type="Texture2D" uid="uid://c6o0ro4o3waef" path="res://icon.svg" id="1_dmf0r"]
+[ext_resource type="Texture2D" uid="uid://bbynsn3d3h5gf" path="res://art/Water1.png" id="2_awgl2"]
+[ext_resource type="Texture2D" uid="uid://bnw52pcrdpcqm" path="res://art/Water2.png" id="3_dib6l"]
+[ext_resource type="Texture2D" uid="uid://ctjyylxdkdpya" path="res://art/Water3.png" id="4_0pbtu"]
+[ext_resource type="Texture2D" uid="uid://cvq8mci7q53i5" path="res://art/Water4.png" id="5_01qy5"]
+[ext_resource type="Script" path="res://WaterAnimate.gd" id="6_m50yi"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gpver"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_awgl2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_dib6l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_0pbtu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_01qy5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="LilGuy" type="Sprite2D"]
 texture = ExtResource("1_dmf0r")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.063, 0.063)
+sprite_frames = SubResource("SpriteFrames_gpver")
+script = ExtResource("6_m50yi")
