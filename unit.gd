@@ -17,7 +17,7 @@ func setup(right=true, dynamic=true, damage=0, damage_type_is_proportional=true)
 	self.damage = damage
 	self.damage_type_is_proportional = damage_type_is_proportional
 	self.pushable = self.dynamic
-	print("pushable=", str(self.pushable))
+#	print("pushable=", str(self.pushable))
 	update()
 	
 func _to_string():

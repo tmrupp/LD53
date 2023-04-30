@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cgg7fyj7qb0qu"]
+[gd_scene load_steps=10 format=3 uid="uid://cgg7fyj7qb0qu"]
 
 [ext_resource type="Texture2D" uid="uid://c6o0ro4o3waef" path="res://icon.svg" id="1_qpcv4"]
 [ext_resource type="Script" path="res://River.gd" id="2_ownun"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://UISoulsCarried.gd" id="7_7tojl"]
 [ext_resource type="Script" path="res://UILeftBankSouls.gd" id="8_27uy0"]
 [ext_resource type="Script" path="res://UIRightBankSouls.gd" id="9_by223"]
+[ext_resource type="Script" path="res://Shop.gd" id="9_p22ci"]
 
 [node name="Main" type="Node2D"]
 
@@ -66,12 +67,44 @@ theme_override_font_sizes/font_size = 36
 text = "Right Bank: X Souls"
 script = ExtResource("9_by223")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="Shop" type="CanvasLayer" parent="."]
+script = ExtResource("9_p22ci")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+[node name="Top" type="HBoxContainer" parent="Shop"]
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer"]
+[node name="OpenShop" type="Button" parent="Shop/Top"]
+layout_mode = 2
+text = "Shop"
+
+[node name="Coins" type="Label" parent="Shop/Top"]
 layout_mode = 2
 text = "Something:"
+
+[node name="UpgradeOptions" type="HBoxContainer" parent="Shop"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -211.0
+offset_top = -100.0
+offset_right = 211.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Strength" type="Button" parent="Shop/UpgradeOptions"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+text = "Increase Strength"
+
+[node name="Speed" type="Button" parent="Shop/UpgradeOptions"]
+layout_mode = 2
+text = "Increase Speed"
+
+[node name="Souls" type="Button" parent="Shop/UpgradeOptions"]
+layout_mode = 2
+text = "Increase Capacity
+"

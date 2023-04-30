@@ -87,25 +87,19 @@ func in_shore_range(pos):
 func push_units(from, pos) -> bool:
 	var new_pos = (pos-from)+pos
 	
-	print("pushing units! from=", from, " pos=", pos, " new_pos=", new_pos)
-	
 	if len(get_units(pos)) == 0:
-		print("t1")
 		return true
 		
 	if any_not_pushable(pos):
 		return false
 	
 	if not in_shore_range(new_pos) or any_not_pushable(new_pos):
-		print("t0")
 		return false
 	else:
 		if push_units(pos, new_pos):
-			print("t2")
 			for unit in get_units(pos):
 				move_unit(unit, pos, new_pos)
 			return true
-	print("t3")
 	return false
 
 # Called when the node enters the scene tree for the first time.
@@ -193,7 +187,7 @@ func to_grid_pos(pos):
 	
 func _input(event):
 	if event is InputEventMouseButton and event.is_pressed():
-		print("clicked at, ", to_grid_pos(get_global_mouse_position()), " glob=", get_global_mouse_position())
+#		print("clicked at, ", to_grid_pos(get_global_mouse_position()), " glob=", get_global_mouse_position())
 		var pos = to_grid_pos(get_global_mouse_position())
 		if len(get_units(pos)) == 0:
 			create_unit(unit_prefab, pos, true, true)
@@ -224,7 +218,7 @@ func river_flow():
 		units_at.append_array(units[pos])
 		for unit in units_at:
 			unit.layered = len(units_at) > 1
-			print("trying to flow: ", unit, " ", str(unit), " pos=", pos)
+#			print("trying to flow: ", unit, " ", str(unit), " pos=", pos)
 			if unit.dynamic:
 				print(len(units[pos]))
 				flow_unit(unit, pos)
