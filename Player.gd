@@ -75,8 +75,8 @@ func next_level():
 	delivery_num = 1
 	
 func full_reset():
-	speed = Stat.new(3, $"../Shop/Top/Speed", "speed",  3)
-	strength = Stat.new(6, $"../Shop/Top/Strength", "strength")
+	speed = Stat.new(3, $"../Shop/Top/PanelContainer4/HBoxContainer/Speed", "",  3)
+	strength = Stat.new(6, $"../Shop/Top/PanelContainer3/HBoxContainer/Strength", "")
 	souls = Stat.new(4, $"../Shop/Top/PanelContainer2/HBoxContainer/Souls", "")
 	next_level()
 	

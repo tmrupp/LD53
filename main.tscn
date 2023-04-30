@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cgg7fyj7qb0qu"]
+[gd_scene load_steps=20 format=3 uid="uid://cgg7fyj7qb0qu"]
 
 [ext_resource type="Texture2D" uid="uid://c6o0ro4o3waef" path="res://icon.svg" id="1_qpcv4"]
 [ext_resource type="PackedScene" uid="uid://dbtbmghsulryi" path="res://julia.tscn" id="2_aktsk"]
@@ -17,6 +17,8 @@
 [ext_resource type="Script" path="res://Restart.gd" id="11_elxc3"]
 [ext_resource type="Texture2D" uid="uid://cu8f5jbjxm6hx" path="res://art/coin.png" id="13_w2vgq"]
 [ext_resource type="Texture2D" uid="uid://ccbqxhq86yvpd" path="res://art/soul.png" id="14_m8472"]
+[ext_resource type="Texture2D" uid="uid://ccjehgx2g3rda" path="res://art/lamp.png" id="18_wgtcj"]
+[ext_resource type="Texture2D" uid="uid://csj0fec37tvx6" path="res://art/cropped_paddle.png" id="19_5lohx"]
 
 [node name="Main" type="Node2D"]
 
@@ -152,11 +154,33 @@ expand_mode = 3
 layout_mode = 2
 text = "Something:"
 
-[node name="Strength" type="Label" parent="Shop/Top"]
+[node name="PanelContainer3" type="PanelContainer" parent="Shop/Top"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/Top/PanelContainer3"]
+layout_mode = 2
+
+[node name="StrengthTextureRect" type="TextureRect" parent="Shop/Top/PanelContainer3/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("18_wgtcj")
+expand_mode = 3
+
+[node name="Strength" type="Label" parent="Shop/Top/PanelContainer3/HBoxContainer"]
 layout_mode = 2
 text = "Something:"
 
-[node name="Speed" type="Label" parent="Shop/Top"]
+[node name="PanelContainer4" type="PanelContainer" parent="Shop/Top"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/Top/PanelContainer4"]
+layout_mode = 2
+
+[node name="SpeedTextureRect" type="TextureRect" parent="Shop/Top/PanelContainer4/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("19_5lohx")
+expand_mode = 3
+
+[node name="Speed" type="Label" parent="Shop/Top/PanelContainer4/HBoxContainer"]
 layout_mode = 2
 text = "Something:"
 
