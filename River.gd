@@ -72,6 +72,12 @@ func any_static(pos):
 			return true
 	return false
 	
+func any_not_pushable(pos):
+	for unit in get_units(pos):
+		if not unit.pushable:
+			return true
+	return false
+	
 func in_range(pos):
 	return pos.x >= 0 and pos.x < map_size.x and pos.y >= 0 and pos.y < map_size.y
 	
@@ -81,15 +87,25 @@ func in_shore_range(pos):
 func push_units(from, pos) -> bool:
 	var new_pos = (pos-from)+pos
 	
-#	print("pushing units! from=", from, " pos=", pos, " new_pos=", new_pos)
+	print("pushing units! from=", from, " pos=", pos, " new_pos=", new_pos)
 	
-	if not in_shore_range(new_pos) or any_static(new_pos):
+	if len(get_units(pos)) == 0:
+		print("t1")
+		return true
+		
+	if any_not_pushable(pos):
+		return false
+	
+	if not in_shore_range(new_pos) or any_not_pushable(new_pos):
+		print("t0")
 		return false
 	else:
-		if len(get_units(pos)) == 0 or push_units(pos, new_pos):
+		if push_units(pos, new_pos):
+			print("t2")
 			for unit in get_units(pos):
 				move_unit(unit, pos, new_pos)
 			return true
+	print("t3")
 	return false
 
 # Called when the node enters the scene tree for the first time.
@@ -140,7 +156,7 @@ func try_flow(unit, pos, try_pos):
 	return false
 
 func flow_unit(unit, pos):
-	print("flowing unit=", unit, " @ ", pos)
+#	print("flowing unit=", unit, " @ ", pos)
 	if unit.moved or not unit.dynamic:
 		return
 	
@@ -187,6 +203,7 @@ func _input(event):
 				unit.right = false
 			elif unit.dynamic:
 				unit.dynamic = false
+				unit.pushable = false
 			else:
 				delete_unit(unit, pos)
 				

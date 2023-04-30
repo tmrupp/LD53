@@ -7,6 +7,8 @@ var layered:bool = false
 var damage:int = 0
 var damage_type_is_proportional:bool = true
 
+var pushable:bool = true
+
 func setup(right=true, dynamic=true, damage=0, damage_type_is_proportional=true):
 	moved = false
 	self.right = right
@@ -14,10 +16,12 @@ func setup(right=true, dynamic=true, damage=0, damage_type_is_proportional=true)
 	self.layered = false
 	self.damage = damage
 	self.damage_type_is_proportional = damage_type_is_proportional
+	self.pushable = self.dynamic
+	print("pushable=", str(self.pushable))
 	update()
 	
 func _to_string():
-	return "right=" + str(right) + " moved=" + str(moved) + " dynamic=" + str(dynamic) + " layered=" + str(layered)
+	return "right=" + str(right) + " moved=" + str(moved) + " dynamic=" + str(dynamic) + " layered=" + str(layered) + " pushable=" + str(pushable)
 
 func update():
 	if dynamic:
@@ -25,7 +29,6 @@ func update():
 			self_modulate = Color.RED
 		else:
 			self_modulate = Color.YELLOW
-			
 	else:
 		self_modulate = Color.GREEN
 	
