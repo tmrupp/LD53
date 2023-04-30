@@ -15,6 +15,14 @@
 
 [node name="Main" type="Node2D"]
 
+[node name="Player" type="Node2D" parent="."]
+z_index = 1
+script = ExtResource("3_rl8sr")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+modulate = Color(1, 0, 1, 1)
+texture = ExtResource("1_qpcv4")
+
 [node name="River" type="Node2D" parent="."]
 script = ExtResource("2_ownun")
 
@@ -28,17 +36,10 @@ script = ExtResource("3_xymk3")
 offset = Vector2(512, 400)
 zoom = Vector2(0.25, 0.25)
 
-[node name="Player" type="Node2D" parent="."]
-z_index = 1
-script = ExtResource("3_rl8sr")
-
-[node name="Sprite2D" type="Sprite2D" parent="Player"]
-modulate = Color(1, 0, 1, 1)
-texture = ExtResource("1_qpcv4")
-
 [node name="UI" type="Node" parent="."]
 
 [node name="Speed" type="Label" parent="UI"]
+visible = false
 offset_left = 377.0
 offset_top = -431.0
 offset_right = 725.0
@@ -48,6 +49,7 @@ text = "Moves Remaining: X"
 script = ExtResource("5_aivmp")
 
 [node name="SoulsCarried" type="Label" parent="UI"]
+visible = false
 offset_left = 377.0
 offset_top = -379.0
 offset_right = 656.0
@@ -57,6 +59,7 @@ text = "Carrying X souls"
 script = ExtResource("7_7tojl")
 
 [node name="LeftBankSouls" type="Label" parent="UI"]
+visible = false
 offset_left = -309.0
 offset_top = -213.0
 offset_bottom = -160.0
@@ -65,6 +68,7 @@ text = "Left Bank: X Souls"
 script = ExtResource("8_27uy0")
 
 [node name="RightBankSouls" type="Label" parent="UI"]
+visible = false
 offset_left = 1152.0
 offset_top = -223.0
 offset_right = 1483.0
@@ -97,6 +101,18 @@ layout_mode = 2
 text = "Shop"
 
 [node name="Coins" type="Label" parent="Shop/Top"]
+layout_mode = 2
+text = "Something:"
+
+[node name="Strength" type="Label" parent="Shop/Top"]
+layout_mode = 2
+text = "Something:"
+
+[node name="Speed" type="Label" parent="Shop/Top"]
+layout_mode = 2
+text = "Something:"
+
+[node name="Souls" type="Label" parent="Shop/Top"]
 layout_mode = 2
 text = "Something:"
 

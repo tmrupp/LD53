@@ -16,9 +16,9 @@ var state:BOAT_STATE = BOAT_STATE.On_Left
 #var max_speed:int = 3 # the value we reset 'speedcurrent_moves_remaining' to after the river flows
 #var current_moves_remaining:int = max_speed
 
-var speed = Stat.new(3, 3)
-var strength = Stat.new(6)
-var souls = Stat.new(4)
+var speed 
+var strength 
+var souls
 
 #var soul_capacity:int = 4 # max number of souls you can carry at once
 #var current_soul_count:int = 0 # number of souls currently being carried
@@ -31,10 +31,14 @@ var delivery_num:int = 1 # number of deliveries made this run
 class Stat:
 	var capacity:int = 4
 	var current:int = 0
+	var label
+	var stat_name
 	
-	func _init(capacity, current=0):
+	func _init(capacity, label, stat_name, current=0):
 		self.capacity = capacity
 		self.current = current
+		self.label = label
+		self.stat_name = stat_name
 		
 	func refresh():
 		current = capacity
@@ -47,10 +51,18 @@ class Stat:
 		
 	func modify(value:int):
 		current += value
-	
+		
+	func show():
+		label.text = stat_name + ": " + str(current) + "/" + str(capacity)
+
+func _process(delta):
+	speed.show()
+	strength.show()
+	souls.show()
 
 func _ready():
 	grid_position = Vector2i(-1, 0)
+	full_reset()
 	
 func next_level():
 	grid_position = Vector2i(-1, 0)
@@ -62,14 +74,10 @@ func next_level():
 	delivery_num = 1
 	
 func full_reset():
-	speed = Stat.new(3, 3)
-	strength = Stat.new(6)
-	souls = Stat.new(4)
+	speed = Stat.new(3, $"../Shop/Top/Speed", "speed",  3)
+	strength = Stat.new(6, $"../Shop/Top/Strength", "strength")
+	souls = Stat.new(4, $"../Shop/Top/Souls", "souls")
 	next_level()
-	
-
-#func _process(delta):
-#	river.player_position = position
 	
 func interact_with_unit(direction:Vector2i):
 	# print("lpp=", grid_position, " direction=", direction)
