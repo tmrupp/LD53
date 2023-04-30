@@ -253,21 +253,22 @@ func river_flow():
 	keys_at.append_array(units.keys())
 	for pos in keys_at:
 		var units_at = []
-		units_at.append_array(units[pos])
-		for unit in units_at:
-			unit.layered = len(units_at) > 1
-#			print("trying to flow: ", unit, " ", str(unit), " pos=", pos)
-			if unit.dynamic:
-#				print(len(units[pos]))
-				flow_unit(unit, pos)
-#			print("pos=", pos)
-#			if unit.dynamic:
-#				var new_pos = pos + down
-##				print("moving!")
-#				if (units.has(new_pos) or (player_position == new_pos)):
-#					new_pos = pos + (Vector2i(1, 0) if unit.right else Vector2i(-1, 0))
-#					new_pos.x = clamp(new_pos.x, 0, map_size.x - 1)
-#
+		if units.has(pos):
+			units_at.append_array(units[pos])
+			for unit in units_at:
+				unit.layered = len(units_at) > 1
+	#			print("trying to flow: ", unit, " ", str(unit), " pos=", pos)
+				if unit.dynamic:
+	#				print(len(units[pos]))
+					flow_unit(unit, pos)
+	#			print("pos=", pos)
+	#			if unit.dynamic:
+	#				var new_pos = pos + down
+	##				print("moving!")
+	#				if (units.has(new_pos) or (player_position == new_pos)):
+	#					new_pos = pos + (Vector2i(1, 0) if unit.right else Vector2i(-1, 0))
+	#					new_pos.x = clamp(new_pos.x, 0, map_size.x - 1)
+	#
 #				move_unit(unit, pos, new_pos)
 
 	for pos in units.keys():
