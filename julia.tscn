@@ -771,7 +771,3 @@ rest = Transform2D(1, 0, 0, 1, -6, 393)
 libraries = {
 "": SubResource("AnimationLibrary_3jmn1")
 }
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(32, -1181)
-zoom = Vector2(0.242, 0.242)
