@@ -30,6 +30,8 @@ func _ready():
 	
 func interact_with_unit(direction:Vector2i):
 	print("lpp=", grid_position, " direction=", direction)
+	for unit in river.get_units(grid_position+direction):
+		unit.deal_damage_to_player(self)
 	return river.push_units(grid_position, grid_position+direction)
 	
 func _input(event):
