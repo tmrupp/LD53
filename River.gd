@@ -66,10 +66,10 @@ func move_unit(unit, origin:Vector2i, target:Vector2i):
 	remove_unit(unit, origin)
 	add_unit(unit, target)
 
-func create_unit(unit, pos, dynamic=true, right=true):
+func create_unit(unit, pos, dynamic=true, right=true, pushable=true):
 	var instance = unit.instantiate()
 	add_child(instance)
-	instance.setup(right, dynamic, 2 if dynamic else 0, dynamic)
+	instance.setup(right, dynamic, 2 if dynamic else 0, dynamic, pushable)
 #	instance.position = pos * spacing
 	add_unit(instance, pos)
 	return instance
@@ -127,7 +127,7 @@ func generate_starting_units():
 			if randi() % 20 == 0:
 				create_unit(unit_prefab, v, true, randi() % 2 == 0)
 			elif randi() % 20 == 1:
-				create_unit(unit_prefab, v, false)
+				create_unit(unit_prefab, v, false, randi() % 2 == 0, randi() % 2 == 0)
 
 var level = 1
 

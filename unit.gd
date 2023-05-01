@@ -14,14 +14,14 @@ var pushable:bool = true
 
 var damage_label:Label = null
 
-func setup(right=true, dynamic=true, damage=0, damage_type_is_proportional=true):
+func setup(right:bool=true, dynamic:bool=true, damage:int=0, damage_type_is_proportional:bool=true, pushable:bool=true):
 	moved = false
 	self.right = right
 	self.dynamic = dynamic
 	self.layered = false
 	self.damage = damage
 	self.damage_type_is_proportional = damage_type_is_proportional
-	self.pushable = self.dynamic
+	self.pushable = pushable
 #	print("pushable=", str(self.pushable))
 
 	if visual == null:
@@ -38,14 +38,19 @@ func setup(right=true, dynamic=true, damage=0, damage_type_is_proportional=true)
 		river.hand_material.shader = load("res://outline.gdshader")
 		river.hand_material.shader
 
-	if not self.dynamic:
-		visual.texture = load("res://art/rock.png")
-		visual.scale = Vector2(0.075, 0.075)
-		visual.material = river.rock_material
-	else:
+	if self.dynamic:
 		visual.texture = load("res://art/handplaceholder.png")
 		visual.scale = Vector2(0.075, 0.075)
 		visual.material = river.hand_material
+	else:
+		if not self.pushable:
+			visual.texture = load("res://art/rock.png")
+			visual.scale = Vector2(0.075, 0.075)
+			visual.material = river.rock_material
+		else:
+			visual.texture = load("res://art/Lillypad.png")
+			visual.scale = Vector2(0.075, 0.075)
+			visual.material = river.rock_material
 	
 	if not self.right:
 		visual.scale.x = -abs(visual.scale.x)
@@ -71,7 +76,7 @@ func deal_damage_to_player(player:Player):
 	var damage_to_deal:int = 0
 	
 	if damage_type_is_proportional: #damage dealt is proportional to number of souls carried
-		damage_to_deal = int(float(player.souls.current) / damage + 0.5)
+		damage_to_deal = max(int(float(player.souls.current) / damage + 0.5), 1)
 	else: #damage dealt is a fixed amount
 		damage_to_deal = damage
 	
