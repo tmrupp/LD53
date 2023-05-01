@@ -143,7 +143,7 @@ func _input(event):
 		if interact_with_unit(Vector2i(0,-1)) != River.PUSH_STATUS.Cant_Push:
 			grid_position.y -= 1
 			on_move()
-	elif event.is_action_pressed("MoveDown") and grid_position.y < (river.map_size.y - 1) * move_unit_size and speed.has():
+	elif event.is_action_pressed("MoveDown") and grid_position.y < (river.map_size.y - 1) and speed.has():
 		if interact_with_unit(Vector2i(0, 1)) != River.PUSH_STATUS.Cant_Push:
 			grid_position.y += 1
 			on_move()
