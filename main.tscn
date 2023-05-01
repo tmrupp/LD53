@@ -113,6 +113,7 @@ size_flags_horizontal = 3
 [node name="Exit" type="Button" parent="Shop/Top"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+focus_mode = 0
 text = "Exit
 "
 script = ExtResource("10_6k82o")
@@ -120,6 +121,7 @@ script = ExtResource("10_6k82o")
 [node name="Restart" type="Button" parent="Shop/Top"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+focus_mode = 0
 text = "Restart
 "
 script = ExtResource("11_elxc3")
@@ -131,6 +133,7 @@ size_flags_horizontal = 3
 [node name="OpenShop" type="Button" parent="Shop/Top"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+focus_mode = 0
 text = "Shop"
 
 [node name="PanelContainer" type="PanelContainer" parent="Shop/Top"]
