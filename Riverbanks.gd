@@ -20,7 +20,7 @@ func get_random_by_range_in_bank(bank):
 	var bank_node = to_bank_node[bank]
 	var transform:Transform2D = bank_node.get_transform()
 	var size = bank_node.texture.get_size()
-	var random_location = Vector2(randf()-.5, randf()-.5)
+	var random_location = Vector2(clamp(randfn(0, .2), -.5, .5), randf()-.5)
 	return transform.origin + ((size * transform.get_scale() - bank_padding)*random_location)
 
 func delete_all_souls():
