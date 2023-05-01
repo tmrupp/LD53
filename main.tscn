@@ -51,15 +51,25 @@ position = Vector2(-180.82, 649)
 scale = Vector2(0.66, 0.66)
 texture = ExtResource("7_qke1e")
 
+[node name="ExtraOnTheSide" type="Sprite2D" parent="River/LeftBankVisual"]
+position = Vector2(-545.727, 0)
+scale = Vector2(-1, 1)
+texture = ExtResource("7_qke1e")
+
 [node name="RightBankVisual" type="Sprite2D" parent="River"]
 z_index = 1
-position = Vector2(2219.18, 649)
+position = Vector2(2135, 649)
 scale = Vector2(0.66, 0.66)
 texture = ExtResource("8_6w0qw")
 
+[node name="ExtraOnTheSide" type="Sprite2D" parent="River/RightBankVisual"]
+position = Vector2(557.576, 0)
+scale = Vector2(-1, 1)
+texture = ExtResource("8_6w0qw")
+
 [node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2(1010, 589)
-zoom = Vector2(0.42, 0.42)
+offset = Vector2(978, 580)
+zoom = Vector2(0.425, 0.425)
 
 [node name="UI" type="Node" parent="."]
 
