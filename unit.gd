@@ -93,7 +93,9 @@ func deal_damage_to_player(player:Player):
 	# deal remaining damage to soul count
 	player.souls.current -= damage_left_to_deal
 #	print("dealing ", damage_left_to_deal, " to souls")
-	if player.souls.current < 0:
+	if player.souls.current <= 0:
+		if player.strength.current <= 0:
+			player.die()
 		player.souls.current = 0
 
 # Called when the node enters the scene tree for the first time.

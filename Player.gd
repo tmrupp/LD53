@@ -73,7 +73,12 @@ func _ready():
 	animation_player.stop()
 	player_visual.scale.x = -absf(player_visual.scale.x)
 	full_reset()
-	
+
+@onready var death = $"../Shop/Death"
+func die():
+	death.visible = true
+
+
 func next_level():
 	grid_position = Vector2i(-1, 0)
 	position = move_unit_size * grid_position
