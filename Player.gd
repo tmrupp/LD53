@@ -59,6 +59,8 @@ class Stat:
 		var postlude = "  " if stat_name == "" else "" 
 		label.text = stat_name + ": " + str(current) + "/" + str(capacity) + postlude
 
+@onready var delivery_multiplier_label = $"../Shop/Top/PanelContainer6/DeliverMultiplier"
+
 func _process(delta):
 	speed.show()
 	strength.show()
@@ -81,6 +83,7 @@ func next_level():
 	souls.clear()
 	delivery_num = 1
 	state = BOAT_STATE.On_Left
+	show_delivery_mult()
 	
 func full_reset():
 	speed = Stat.new(3, $"../Shop/Top/PanelContainer4/HBoxContainer/Speed", "",  3)
@@ -103,11 +106,22 @@ func interact_with_unit(direction:Vector2i):
 	
 	return status
 	
+func show_delivery_mult():
+	var mul = 2.0/delivery_num
+	if mul < 1:
+		mul = "2/"+str(delivery_num)
+	else:
+		mul = str(mul)
+		
+	delivery_multiplier_label.text = " "+mul+"X "
+		
+
 func deliver():
 #	current_moves_remaining = max_speed
 	speed.refresh()
 	shop.delta_coins(souls.current*(2.0/delivery_num))
 	delivery_num += 1
+	show_delivery_mult()
 	riverbanks.deposit_on_right(souls.current)
 	souls.clear()
 	
