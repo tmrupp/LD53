@@ -69,7 +69,7 @@ func move_unit(unit, origin:Vector2i, target:Vector2i):
 func create_unit(unit, pos, dynamic=true, right=true):
 	var instance = unit.instantiate()
 	add_child(instance)
-	instance.setup(right, dynamic)
+	instance.setup(right, dynamic, 2 if dynamic else 0, dynamic)
 #	instance.position = pos * spacing
 	add_unit(instance, pos)
 	return instance
