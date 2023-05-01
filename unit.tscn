@@ -1,10 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://irwds8e3jlo7"]
+[gd_scene load_steps=4 format=3 uid="uid://bpxuxld5b6rll"]
 
-[ext_resource type="Texture2D" uid="uid://c6o0ro4o3waef" path="res://icon.svg" id="1_qdrrj"]
-[ext_resource type="Script" path="res://Unit.gd" id="2_li54h"]
+[ext_resource type="Script" path="res://unit.gd" id="2_2xu2h"]
+[ext_resource type="Shader" path="res://outline.gdshader" id="2_26kob"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_76rl3"]
+shader = ExtResource("2_26kob")
+shader_parameter/line_color = Quaternion(1, 1, 1, 1)
+shader_parameter/line_thickness = 1.0
 
 [node name="Unit" type="Sprite2D"]
 z_index = 1
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("1_qdrrj")
-script = ExtResource("2_li54h")
+script = ExtResource("2_2xu2h")
+
+[node name="Visual" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_76rl3")
