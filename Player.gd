@@ -75,9 +75,10 @@ func _ready():
 	full_reset()
 
 @onready var death = $"../Shop/Death"
+@onready var dead = false
 func die():
+	dead = true
 	death.visible = true
-
 
 func next_level():
 	grid_position = Vector2i(-1, 0)
@@ -136,6 +137,10 @@ func deliver():
 	
 func _input(event):
 	# movement
+	
+	if (dead):
+		return
+	
 	if event.is_action_pressed("Wait"):
 		on_move()
 	elif event.is_action_pressed("MoveRight") and grid_position.x < river.map_size.x and speed.has():
