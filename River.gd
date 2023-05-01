@@ -145,6 +145,7 @@ func next_level():
 	level += 1
 	
 func _ready():
+#	print("log(128)=", log(128)/log(2))
 	randomize()
 	
 #	print(spacing)
@@ -282,11 +283,13 @@ func river_flow():
 		for unit in units[pos]:
 			refresh_unit(unit)
 	
+#	print("(20 - 2*int(log(level)))=", (20 - 2*int(log(level)/log(2))))
+	
 	# randomly add new units just above the top of the grid
 	if (gen):
 		for x in range(map_size.x):
 			var v = Vector2i(x, -1)
-			if randi() % 20 == 0:
+			if randi() % (20 - 2*int(log(level)/log(2))) == 0:
 				create_unit(unit_prefab, v, true, randi() % 2 == 0)
 	
 	# clear units that are now off the bottom of the grid
