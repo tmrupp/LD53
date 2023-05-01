@@ -46,7 +46,10 @@ func setup(right=true, dynamic=true, damage=0, damage_type_is_proportional=true)
 		visual.texture = load("res://art/handplaceholder.png")
 		visual.scale = Vector2(0.075, 0.075)
 		visual.material = river.hand_material
-		
+	
+	if not self.right:
+		visual.scale.x = -abs(visual.scale.x)
+	
 	update()
 	
 func _to_string():
