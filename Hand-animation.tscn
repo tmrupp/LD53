@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dtb5f223bqfk1"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="HandBase" type="Polygon2D" parent="."]
+
+[node name="Thumb" type="Polygon2D" parent="HandBase"]
+
+[node name="Index" type="Polygon2D" parent="HandBase"]
+
+[node name="Middle" type="Polygon2D" parent="HandBase"]
