@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://bdpuwxrvdwijq"]
+
+[ext_resource type="Script" path="res://Exit.gd" id="1_0hf3a"]
+[ext_resource type="Script" path="res://CanvasLayer.gd" id="1_8g44y"]
+[ext_resource type="Script" path="res://Start.gd" id="1_vccqe"]
+[ext_resource type="Texture2D" uid="uid://cj1xfrxw2im03" path="res://art/splashscreen.png" id="4_inhkg"]
+[ext_resource type="Script" path="res://Splashscreen.gd" id="5_psqip"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+script = ExtResource("1_8g44y")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -33.0
+offset_right = 23.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Start" type="Button" parent="CanvasLayer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Start"
+script = ExtResource("1_vccqe")
+
+[node name="Exit" type="Button" parent="CanvasLayer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+text = "Exit
+"
+script = ExtResource("1_0hf3a")
+
+[node name="Splashscreen" type="Sprite2D" parent="."]
+position = Vector2(575, 319.5)
+scale = Vector2(0.298958, 0.302315)
+texture = ExtResource("4_inhkg")
+script = ExtResource("5_psqip")
