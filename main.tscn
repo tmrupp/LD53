@@ -8,8 +8,8 @@
 [ext_resource type="Script" path="res://GiveDamageToUnit.gd" id="3_xymk3"]
 [ext_resource type="Script" path="res://UISpeed.gd" id="5_aivmp"]
 [ext_resource type="Script" path="res://UISoulsCarried.gd" id="7_7tojl"]
-[ext_resource type="Texture2D" uid="uid://yk1hf5x4m36h" path="res://art/leftbankstraightcropped.png" id="7_qke1e"]
-[ext_resource type="Texture2D" uid="uid://c8fy5tqtu1sgq" path="res://art/rightbankstraightcropped.png" id="8_6w0qw"]
+[ext_resource type="Texture2D" uid="uid://dg8e7myoksup4" path="res://art/leftbankstraightcropped.png" id="7_qke1e"]
+[ext_resource type="Texture2D" uid="uid://cm36krljb5f1h" path="res://art/rightbankstraightcropped.png" id="8_6w0qw"]
 [ext_resource type="Script" path="res://UILeftBankSouls.gd" id="8_27uy0"]
 [ext_resource type="Script" path="res://UIRightBankSouls.gd" id="9_by223"]
 [ext_resource type="Script" path="res://Shop.gd" id="9_p22ci"]
@@ -47,19 +47,29 @@ script = ExtResource("3_xymk3")
 
 [node name="LeftBankVisual" type="Sprite2D" parent="River"]
 z_index = 1
-position = Vector2(-167, 575)
-scale = Vector2(0.6, 0.6)
+position = Vector2(-180.82, 649)
+scale = Vector2(0.66, 0.66)
+texture = ExtResource("7_qke1e")
+
+[node name="ExtraOnTheSide" type="Sprite2D" parent="River/LeftBankVisual"]
+position = Vector2(-545.727, 0)
+scale = Vector2(-1, 1)
 texture = ExtResource("7_qke1e")
 
 [node name="RightBankVisual" type="Sprite2D" parent="River"]
 z_index = 1
-position = Vector2(1336, 575)
-scale = Vector2(0.6, 0.6)
+position = Vector2(2135, 649)
+scale = Vector2(0.66, 0.66)
+texture = ExtResource("8_6w0qw")
+
+[node name="ExtraOnTheSide" type="Sprite2D" parent="River/RightBankVisual"]
+position = Vector2(557.576, 0)
+scale = Vector2(-1, 1)
 texture = ExtResource("8_6w0qw")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2(544, 480)
-zoom = Vector2(0.42, 0.42)
+offset = Vector2(978, 580)
+zoom = Vector2(0.425, 0.425)
 
 [node name="UI" type="Node" parent="."]
 
@@ -84,6 +94,7 @@ text = "Carrying X souls"
 script = ExtResource("7_7tojl")
 
 [node name="LeftBankSouls" type="Label" parent="UI"]
+visible = false
 offset_left = -621.0
 offset_top = 36.0
 offset_right = -312.0
@@ -93,6 +104,7 @@ text = "Left Bank: X Souls"
 script = ExtResource("8_27uy0")
 
 [node name="RightBankSouls" type="Label" parent="UI"]
+visible = false
 offset_left = 1354.0
 offset_top = 42.0
 offset_right = 1685.0

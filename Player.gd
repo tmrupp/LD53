@@ -122,6 +122,7 @@ func _input(event):
 	elif event.is_action_pressed("MoveRight") and grid_position.x < river.map_size.x and speed.has():
 		if interact_with_unit(Vector2i(1,0)) != River.PUSH_STATUS.Cant_Push:
 			grid_position.x += 1
+			player_visual.scale.x = -absf(player_visual.scale.x)
 			on_move()
 			if state == BOAT_STATE.On_Left:
 				state = BOAT_STATE.In_River
@@ -131,6 +132,7 @@ func _input(event):
 	elif event.is_action_pressed("MoveLeft") and grid_position.x >= 0 and speed.has():
 		if interact_with_unit(Vector2i(-1,0)) != River.PUSH_STATUS.Cant_Push:
 			grid_position.x -= 1
+			player_visual.scale.x = absf(player_visual.scale.x)
 			on_move()
 			if state == BOAT_STATE.On_Right:
 				state = BOAT_STATE.In_River
@@ -141,7 +143,7 @@ func _input(event):
 		if interact_with_unit(Vector2i(0,-1)) != River.PUSH_STATUS.Cant_Push:
 			grid_position.y -= 1
 			on_move()
-	elif event.is_action_pressed("MoveDown") and grid_position.y < (river.map_size.y - 1) * move_unit_size and speed.has():
+	elif event.is_action_pressed("MoveDown") and grid_position.y < (river.map_size.y - 1) and speed.has():
 		if interact_with_unit(Vector2i(0, 1)) != River.PUSH_STATUS.Cant_Push:
 			grid_position.y += 1
 			on_move()

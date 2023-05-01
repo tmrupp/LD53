@@ -46,7 +46,10 @@ func setup(right=true, dynamic=true, damage=0, damage_type_is_proportional=true)
 		visual.texture = load("res://art/handplaceholder.png")
 		visual.scale = Vector2(0.075, 0.075)
 		visual.material = river.hand_material
-		
+	
+	if not self.right:
+		visual.scale.x = -abs(visual.scale.x)
+	
 	update()
 	
 func _to_string():
@@ -98,8 +101,8 @@ func _process(delta):
 		if damage_label == null:
 			damage_label = Label.new()
 			add_child(damage_label)
-		damage_label.text = str(damage)
-		damage_label.add_theme_font_size_override("font_size", 72)
+		damage_label.text = "1/" + str(damage) if damage_type_is_proportional else str(damage)
+		damage_label.add_theme_font_size_override("font_size", 64)
 	else:
 		if damage_label != null:
 			damage_label.queue_free()
