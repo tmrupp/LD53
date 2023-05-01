@@ -9,6 +9,8 @@ var soul_sprite = preload("res://soul.tscn")
 var bank_padding = Vector2(100.0, 100.0)
 #var bank_padding = Vector2(0,0)
 
+@onready var souls_remaining_label = $"../../Shop/Top/PanelContainer5/RemainingSouls"
+
 var souls = {
 	"left":[],
 	"right":[],
@@ -42,6 +44,9 @@ func modify_souls(bank, value):
 			souls[bank].append(soul)
 			
 			soul.position = get_random_by_range_in_bank(bank)
+			
+	if bank == "left":
+		souls_remaining_label.text = "  Souls Waiting: " + str(left_bank_souls) + "  "
 
 func _ready():
 	print(left_bank.get_transform())

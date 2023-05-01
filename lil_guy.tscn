@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://cgaw6yey8lhd8"]
 
-[ext_resource type="Texture2D" uid="uid://bkt8b25px5f74" path="res://art/WAWA1.png" id="1_pi83m"]
-[ext_resource type="Texture2D" uid="uid://bs2s3lmdtjclq" path="res://art/WAWA2.png" id="2_cfmng"]
-[ext_resource type="Texture2D" uid="uid://cdt1thu1r07rn" path="res://art/WAWA3.png" id="3_xjsf5"]
-[ext_resource type="Texture2D" uid="uid://xr4ty7slgkbk" path="res://art/WAWA4.png" id="4_q3wnf"]
-[ext_resource type="Texture2D" uid="uid://dnoqlhjbd5vd8" path="res://art/WAWA5.png" id="5_mi8up"]
+[ext_resource type="Texture2D" uid="uid://dnayk4a8dlkfs" path="res://art/WAWA1.png" id="1_pi83m"]
+[ext_resource type="Texture2D" uid="uid://xpo0qrvcem5s" path="res://art/WAWA2.png" id="2_cfmng"]
+[ext_resource type="Texture2D" uid="uid://cpgyalwmcf4on" path="res://art/WAWA3.png" id="3_xjsf5"]
+[ext_resource type="Texture2D" uid="uid://hq6w6ws01vdh" path="res://art/WAWA4.png" id="4_q3wnf"]
+[ext_resource type="Texture2D" uid="uid://d1c8jtvh471j5" path="res://art/WAWA5.png" id="5_mi8up"]
 [ext_resource type="Script" path="res://WaterAnimate.gd" id="6_m50yi"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gpver"]
