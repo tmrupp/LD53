@@ -80,6 +80,7 @@ func next_level():
 	strength.refresh()
 	souls.clear()
 	delivery_num = 1
+	state = BOAT_STATE.On_Left
 	
 func full_reset():
 	speed = Stat.new(3, $"../Shop/Top/PanelContainer4/HBoxContainer/Speed", "",  3)

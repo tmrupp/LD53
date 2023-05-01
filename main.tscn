@@ -8,8 +8,8 @@
 [ext_resource type="Script" path="res://GiveDamageToUnit.gd" id="3_xymk3"]
 [ext_resource type="Script" path="res://UISpeed.gd" id="5_aivmp"]
 [ext_resource type="Script" path="res://UISoulsCarried.gd" id="7_7tojl"]
-[ext_resource type="Texture2D" uid="uid://gvtcma3v4fv2" path="res://art/leftbankstraight.png" id="7_n5r5w"]
-[ext_resource type="Texture2D" uid="uid://buvidp3gmppmw" path="res://art/rightbankstraight.png" id="8_3tely"]
+[ext_resource type="Texture2D" uid="uid://yk1hf5x4m36h" path="res://art/leftbankstraightcropped.png" id="7_qke1e"]
+[ext_resource type="Texture2D" uid="uid://c8fy5tqtu1sgq" path="res://art/rightbankstraightcropped.png" id="8_6w0qw"]
 [ext_resource type="Script" path="res://UILeftBankSouls.gd" id="8_27uy0"]
 [ext_resource type="Script" path="res://UIRightBankSouls.gd" id="9_by223"]
 [ext_resource type="Script" path="res://Shop.gd" id="9_p22ci"]
@@ -47,15 +47,15 @@ script = ExtResource("3_xymk3")
 
 [node name="LeftBankVisual" type="Sprite2D" parent="River"]
 z_index = 1
-position = Vector2(814, 580)
+position = Vector2(-167, 575)
 scale = Vector2(0.6, 0.6)
-texture = ExtResource("7_n5r5w")
+texture = ExtResource("7_qke1e")
 
 [node name="RightBankVisual" type="Sprite2D" parent="River"]
 z_index = 1
-position = Vector2(360, 580)
+position = Vector2(1336, 575)
 scale = Vector2(0.6, 0.6)
-texture = ExtResource("8_3tely")
+texture = ExtResource("8_6w0qw")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(544, 480)
