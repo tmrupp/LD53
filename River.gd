@@ -2,6 +2,11 @@ extends Node2D
 
 class_name River
 
+#---
+var rock_material:Material
+var hand_material:ShaderMaterial
+#---
+
 var spacing = 128.0
 var map = []
 
@@ -63,8 +68,8 @@ func move_unit(unit, origin:Vector2i, target:Vector2i):
 
 func create_unit(unit, pos, dynamic=true, right=true):
 	var instance = unit.instantiate()
-	instance.setup(right, dynamic)
 	add_child(instance)
+	instance.setup(right, dynamic)
 #	instance.position = pos * spacing
 	add_unit(instance, pos)
 	return instance

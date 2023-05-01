@@ -1,5 +1,8 @@
 extends Sprite2D
 
+@onready var visual:Sprite2D = $"./Visual"
+@onready var river:River = $"../"
+
 var right:bool = true
 var dynamic:bool = true
 var moved:bool = false
@@ -20,6 +23,30 @@ func setup(right=true, dynamic=true, damage=0, damage_type_is_proportional=true)
 	self.damage_type_is_proportional = damage_type_is_proportional
 	self.pushable = self.dynamic
 #	print("pushable=", str(self.pushable))
+
+	if visual == null:
+		visual = $"./Visual"
+	
+	if river == null:
+		river = $"../"
+	
+	if river.rock_material == null:
+		river.rock_material = Material.new()
+		
+	if river.hand_material == null:
+		river.hand_material = ShaderMaterial.new()
+		river.hand_material.shader = load("res://outline.gdshader")
+		river.hand_material.shader
+
+	if not self.dynamic:
+		visual.texture = load("res://art/rock.png")
+		visual.scale = Vector2(0.075, 0.075)
+		visual.material = river.rock_material
+	else:
+		visual.texture = load("res://art/handplaceholder.png")
+		visual.scale = Vector2(0.075, 0.075)
+		visual.material = river.hand_material
+		
 	update()
 	
 func _to_string():
@@ -33,6 +60,7 @@ func update():
 			self_modulate = Color.YELLOW
 	else:
 		self_modulate = Color.GREEN
+		pass
 	
 
 # modifies player values
