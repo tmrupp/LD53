@@ -79,5 +79,4 @@ animations = [{
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.063, 0.063)
 sprite_frames = SubResource("SpriteFrames_gpver")
-frame_progress = 0.445077
 script = ExtResource("6_m50yi")
