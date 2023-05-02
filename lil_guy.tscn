@@ -1,33 +1,77 @@
-[gd_scene load_steps=8 format=3 uid="uid://cgaw6yey8lhd8"]
+[gd_scene load_steps=19 format=3 uid="uid://cgaw6yey8lhd8"]
 
-[ext_resource type="Texture2D" uid="uid://dnayk4a8dlkfs" path="res://art/WAWA1.png" id="1_pi83m"]
-[ext_resource type="Texture2D" uid="uid://xpo0qrvcem5s" path="res://art/WAWA2.png" id="2_cfmng"]
-[ext_resource type="Texture2D" uid="uid://cpgyalwmcf4on" path="res://art/WAWA3.png" id="3_xjsf5"]
-[ext_resource type="Texture2D" uid="uid://hq6w6ws01vdh" path="res://art/WAWA4.png" id="4_q3wnf"]
-[ext_resource type="Texture2D" uid="uid://d1c8jtvh471j5" path="res://art/WAWA5.png" id="5_mi8up"]
+[ext_resource type="Texture2D" uid="uid://c0lmho65pc3tb" path="res://art/HDWater16.png" id="1_x0vqk"]
+[ext_resource type="Texture2D" uid="uid://b2xxqmvrbdv75" path="res://art/HDWater15.png" id="2_5wixj"]
+[ext_resource type="Texture2D" uid="uid://bxwu2cm21swiw" path="res://art/HDWater14.png" id="3_glt0i"]
+[ext_resource type="Texture2D" uid="uid://ctge735bx77sh" path="res://art/HDWater13.png" id="4_pe8rf"]
+[ext_resource type="Texture2D" uid="uid://d0nh0s2rssnva" path="res://art/HDWater12.png" id="5_11x5p"]
+[ext_resource type="Texture2D" uid="uid://cx74unhdqd04l" path="res://art/HDWater11.png" id="6_8p2n2"]
 [ext_resource type="Script" path="res://WaterAnimate.gd" id="6_m50yi"]
+[ext_resource type="Texture2D" uid="uid://c0aad7a44uqfq" path="res://art/HDWater10.png" id="7_3oxye"]
+[ext_resource type="Texture2D" uid="uid://2tntakdoqfld" path="res://art/HDWater9.png" id="8_b65he"]
+[ext_resource type="Texture2D" uid="uid://cayb31nwivbvs" path="res://art/HDWater8.png" id="9_stxtv"]
+[ext_resource type="Texture2D" uid="uid://dh7c0w70esyrr" path="res://art/HDWater7.png" id="10_748lf"]
+[ext_resource type="Texture2D" uid="uid://rdkmc3ud6ejd" path="res://art/HDWater6.png" id="11_dw1qy"]
+[ext_resource type="Texture2D" uid="uid://dgd1il64um13l" path="res://art/HDWater5.png" id="12_hpqd8"]
+[ext_resource type="Texture2D" uid="uid://7bqt0y7qegts" path="res://art/HDWater4.png" id="13_orglg"]
+[ext_resource type="Texture2D" uid="uid://6qjaeiqvlmcn" path="res://art/HDWater3.png" id="14_c8x2d"]
+[ext_resource type="Texture2D" uid="uid://c6ekssndtpxqa" path="res://art/HDWater2.png" id="15_dfd8w"]
+[ext_resource type="Texture2D" uid="uid://chfo6hf57l8i2" path="res://art/HDWater1.png" id="16_8gj3b"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gpver"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_pi83m")
+"texture": ExtResource("1_x0vqk")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_cfmng")
+"texture": ExtResource("2_5wixj")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_xjsf5")
+"texture": ExtResource("3_glt0i")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_q3wnf")
+"texture": ExtResource("4_pe8rf")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_mi8up")
+"texture": ExtResource("5_11x5p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_8p2n2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_3oxye")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_b65he")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_stxtv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_748lf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_dw1qy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_hpqd8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_orglg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_c8x2d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_dfd8w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_8gj3b")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [node name="LilGuy" type="Sprite2D"]
@@ -35,5 +79,5 @@ animations = [{
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.063, 0.063)
 sprite_frames = SubResource("SpriteFrames_gpver")
-frame_progress = 0.438628
+frame_progress = 0.445077
 script = ExtResource("6_m50yi")
